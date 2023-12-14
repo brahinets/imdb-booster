@@ -27,6 +27,7 @@ class ImdbApiClientConfiguration {
     @Bean
     fun imdbWebClient(): WebClient {
         return WebClient.builder()
+            .baseUrl("https://api.graphql.imdb.com")
             .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_GRAPHQL_RESPONSE_VALUE)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build()
