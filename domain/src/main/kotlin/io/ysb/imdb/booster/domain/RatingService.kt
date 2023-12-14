@@ -1,13 +1,13 @@
 package io.ysb.imdb.booster.domain
 
-import io.ysb.imdb.booster.domain.port.input.SetMovieRatingUseCase
-import io.ysb.imdb.booster.domain.port.output.SetMovieRatingPort
+import io.ysb.imdb.booster.domain.port.input.SetTitleRatingUseCase
+import io.ysb.imdb.booster.domain.port.output.SetTitleRatingPort
 
 class RatingService(
-    private val setMovieRatingPort: SetMovieRatingPort
-) : SetMovieRatingUseCase {
+    private val setTitleRatingPort: SetTitleRatingPort
+) : SetTitleRatingUseCase {
 
-    override fun setRating(movieId: MovieId, rating: Int) {
-        setMovieRatingPort.setMovieRating(movieId, rating)
+    override fun setRating(titleId: TitleId, rating: Int) {
+        setTitleRatingPort.setTitleRating(titleId, rating)
     }
 }

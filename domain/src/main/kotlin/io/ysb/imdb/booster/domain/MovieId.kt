@@ -1,3 +1,3 @@
 package io.ysb.imdb.booster.domain
 
-typealias MovieId = String
+typealias TitleId = String

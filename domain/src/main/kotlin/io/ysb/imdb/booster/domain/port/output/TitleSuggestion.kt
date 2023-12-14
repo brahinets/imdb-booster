@@ -1,9 +1,9 @@
 package io.ysb.imdb.booster.domain.port.output
 
-import io.ysb.imdb.booster.domain.MovieId
+import io.ysb.imdb.booster.domain.TitleId
 
-data class MovieSuggestion(
-    val id: MovieId,
+data class TitleSuggestion(
+    val id: TitleId,
     val title: String,
     val year: Int
 )
