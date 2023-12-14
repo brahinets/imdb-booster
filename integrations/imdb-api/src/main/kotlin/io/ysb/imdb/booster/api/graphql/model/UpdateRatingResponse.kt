@@ -19,8 +19,4 @@ data class UpdateRatingResponse(
         val value: Long,
         @JsonProperty("__typename") val typename: String,
     )
-
-    data class Extensions(
-        val disclaimer: String,
-    )
 }
