@@ -6,7 +6,7 @@ import io.ysb.imdb.booster.domain.port.output.GetMovieScorePort
 import io.ysb.imdb.booster.domain.port.output.MovieSuggestion
 import io.ysb.imdb.booster.domain.port.output.SearchMovieByIdPort
 
-class GetMovieService(
+class MovieService(
     private val getMovieScorePort: GetMovieScorePort,
     private val searchMovieByIdPort: SearchMovieByIdPort
 ) : GetMovieUseCase {
