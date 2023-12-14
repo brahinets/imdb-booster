@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":integrations:imdb-api"))
 
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
