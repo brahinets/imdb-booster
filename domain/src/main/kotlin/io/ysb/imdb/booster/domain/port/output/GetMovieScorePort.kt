@@ -1,4 +1,4 @@
-package io.ysb.imdb.booster.domain.port
+package io.ysb.imdb.booster.domain.port.output
 
 import io.ysb.imdb.booster.domain.MovieId
 import java.util.Optional

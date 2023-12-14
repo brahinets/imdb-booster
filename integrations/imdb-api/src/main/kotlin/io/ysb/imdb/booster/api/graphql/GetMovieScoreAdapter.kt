@@ -2,7 +2,7 @@ package io.ysb.imdb.booster.api.graphql
 
 import io.ysb.imdb.booster.api.graphql.model.Model
 import io.ysb.imdb.booster.domain.MovieId
-import io.ysb.imdb.booster.domain.port.GetMovieScorePort
+import io.ysb.imdb.booster.domain.port.output.GetMovieScorePort
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import java.util.*
