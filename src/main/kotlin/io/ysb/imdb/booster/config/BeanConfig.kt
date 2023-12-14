@@ -2,7 +2,7 @@ package io.ysb.imdb.booster.config
 
 import io.ysb.imdb.booster.domain.MovieService
 import io.ysb.imdb.booster.domain.RatingService
-import io.ysb.imdb.booster.domain.port.output.GetMovieScorePort
+import io.ysb.imdb.booster.domain.port.output.GetMovieRatingPort
 import io.ysb.imdb.booster.domain.port.output.SearchMovieByIdPort
 import io.ysb.imdb.booster.domain.port.output.SetMovieRatingPort
 import org.springframework.context.annotation.Bean
@@ -13,10 +13,10 @@ class BeanConfig {
 
     @Bean
     fun getMovieService(
-        getMovieScorePort: GetMovieScorePort,
+        getMovieRatingPort: GetMovieRatingPort,
         searchMovieByIdPort: SearchMovieByIdPort
     ): MovieService {
-        return MovieService(getMovieScorePort, searchMovieByIdPort)
+        return MovieService(getMovieRatingPort, searchMovieByIdPort)
     }
 
     @Bean

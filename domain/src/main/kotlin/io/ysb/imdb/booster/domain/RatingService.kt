@@ -7,7 +7,7 @@ class RatingService(
     private val setMovieRatingPort: SetMovieRatingPort
 ) : SetMovieRatingUseCase {
 
-    override fun setRating(movieId: MovieId, score: Int) {
-        setMovieRatingPort.setMovieRating(movieId, score)
+    override fun setRating(movieId: MovieId, rating: Int) {
+        setMovieRatingPort.setMovieRating(movieId, rating)
     }
 }

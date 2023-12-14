@@ -2,15 +2,15 @@ package io.ysb.imdb.booster.api.graphql
 
 import io.ysb.imdb.booster.api.graphql.model.Model
 import io.ysb.imdb.booster.domain.MovieId
-import io.ysb.imdb.booster.domain.port.output.GetMovieScorePort
+import io.ysb.imdb.booster.domain.port.output.GetMovieRatingPort
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import java.util.*
 
 @Component
-class GetMovieScoreAdapter(val imdbClient: WebClient) : GetMovieScorePort {
+class GetMovieRatingAdapter(val imdbClient: WebClient) : GetMovieRatingPort {
 
-    override fun getMovieScore(movieId: MovieId): Optional<Int> {
+    override fun getMovieRating(movieId: MovieId): Optional<Int> {
         val get: Model = getMovieResponse(movieId)
 
         val titles = get.data.titles

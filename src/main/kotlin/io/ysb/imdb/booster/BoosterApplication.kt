@@ -12,11 +12,11 @@ fun main(args: Array<String>) {
     val context = runApplication<BoosterApplication>(*args)
 
     val movieApi = context.getBean(GetMovieUseCase::class.java)
-    val scoreApi = context.getBean(SetMovieRatingUseCase::class.java)
+    val ratingApi = context.getBean(SetMovieRatingUseCase::class.java)
 
     val movie = movieApi.getMovie("tt14524712")
     println(movie)
-    println(scoreApi.setRating("tt14524712", 9))
+    println(ratingApi.setRating("tt14524712", 9))
     println(movieApi.getMovie("tt14524712"))
-    println(scoreApi.setRating("tt14524712", movie.myRating!!))
+    println(ratingApi.setRating("tt14524712", movie.myRating!!))
 }
