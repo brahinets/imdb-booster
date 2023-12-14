@@ -10,7 +10,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
-class ApiClientConfiguration {
+class ImdbApiClientConfiguration {
 
     @Bean
     fun objectMapper(): Jackson2ObjectMapperBuilder {

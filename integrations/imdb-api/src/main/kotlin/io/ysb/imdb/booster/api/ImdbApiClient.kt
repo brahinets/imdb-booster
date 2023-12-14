@@ -10,8 +10,8 @@ import java.net.URI
 
 
 @Service
-class ApiClient(
-    private val webClient: WebClient,
+class ImdbApiClient(
+    private val imdbWebClient: WebClient,
     @Value("\${imdb.api.session.cookie}") private val sessionCookie: String
 ) {
     fun get(movieId: MovieId): Model {
@@ -19,7 +19,7 @@ class ApiClient(
             .fromUriString("https://api.graphql.imdb.com/?operationName=TitlesUserRatings&variables={\"idArray\":[\"$movieId\"]}&extensions={\"persistedQuery\":{\"sha256Hash\":\"7895b806b91031c960384b9f47f276f45ecf5e817b5126b03ae754151c7bd530\",\"version\":1}}")
             .build().encode().toUri();
 
-        return webClient.get()
+        return imdbWebClient.get()
             .uri(toUri)
             .header("Cookie", sessionCookie)
             .retrieve()

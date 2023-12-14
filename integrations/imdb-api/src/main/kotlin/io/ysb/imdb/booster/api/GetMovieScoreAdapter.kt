@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class GetMovieScoreAdapter(val imdbClient: ApiClient) : GetMovieScorePort {
+class GetMovieScoreAdapter(val imdbClient: ImdbApiClient) : GetMovieScorePort {
 
     override fun getMovieScore(movieId: MovieId): Optional<Int> {
         val get: Model = imdbClient.get(movieId)
