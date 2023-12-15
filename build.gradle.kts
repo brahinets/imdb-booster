@@ -14,10 +14,6 @@ java {
     sourceCompatibility = JavaVersion.VERSION_21
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation(project(":domain"))
     implementation(project(":integrations:imdb-api"))
@@ -27,6 +23,12 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
 }
 
 tasks.withType<KotlinCompile> {
