@@ -6,6 +6,7 @@ import io.ysb.imdb.booster.port.output.SetTitleRatingPort
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.util.Optional
 
 class RatingServiceTest {
@@ -35,6 +36,20 @@ class RatingServiceTest {
         ratingService.rateTitle("tt12345678", 10)
 
         assertEquals(8, titles["tt12345678"])
+    }
+
+    @Test
+    fun `min allowed score is 1`() {
+        assertThrows<IllegalArgumentException>(
+            "Rate must be between 1 and 10 (inclusive)"
+        ) { ratingService.rateTitle("tt87654321", 0) }
+    }
+
+    @Test
+    fun `max allowed score is 10`() {
+        assertThrows<IllegalArgumentException>(
+            "Rate must be between 1 and 10 (inclusive)"
+        ) { ratingService.rateTitle("tt87654321", 11) }
     }
 
     private inner class TestGetTitleRatingPort : GetTitleRatingPort {
