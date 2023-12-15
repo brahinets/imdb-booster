@@ -6,14 +6,14 @@ import io.ysb.imdb.booster.port.output.SetTitleRatingPort
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.util.*
+import java.util.Optional
 
 class RatingServiceTest {
     private var titles: MutableMap<String, Int> = mutableMapOf(
         Pair("tt12345678", 8)
     )
 
-    private lateinit var ratingService: RatingService
+    private lateinit var ratingService: RateTitleUseCase
 
     @BeforeEach
     fun setUp() {
@@ -25,11 +25,6 @@ class RatingServiceTest {
 
     @Test
     fun `rate title should rate title without rate yet`() {
-        val ratingService: RateTitleUseCase = RatingService(
-            TestSetTitleRatingPort(),
-            TestGetTitleRatingPort()
-        )
-
         ratingService.rateTitle("tt87654321", 10)
 
         assertEquals(10, titles["tt87654321"])
