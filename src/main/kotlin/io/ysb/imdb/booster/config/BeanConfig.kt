@@ -1,7 +1,8 @@
 package io.ysb.imdb.booster.config
 
-import io.ysb.imdb.booster.domain.TitleService
+import io.ysb.imdb.booster.domain.MatchingService
 import io.ysb.imdb.booster.domain.RatingService
+import io.ysb.imdb.booster.domain.TitleService
 import io.ysb.imdb.booster.port.output.GetTitleRatingPort
 import io.ysb.imdb.booster.port.output.SearchTitleByIdPort
 import io.ysb.imdb.booster.port.output.SetTitleRatingPort
@@ -17,6 +18,11 @@ class BeanConfig {
         searchTitleByIdPort: SearchTitleByIdPort
     ): TitleService {
         return TitleService(getTitleRatingPort, searchTitleByIdPort)
+    }
+
+    @Bean
+    fun matchingService(): MatchingService {
+        return MatchingService()
     }
 
     @Bean
