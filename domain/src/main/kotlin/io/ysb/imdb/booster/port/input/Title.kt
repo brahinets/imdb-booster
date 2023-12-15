@@ -1,4 +1,4 @@
-package io.ysb.imdb.booster.domain.port.input
+package io.ysb.imdb.booster.port.input
 
 import io.ysb.imdb.booster.domain.TitleId
 

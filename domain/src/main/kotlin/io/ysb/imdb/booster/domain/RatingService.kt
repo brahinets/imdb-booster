@@ -1,8 +1,8 @@
 package io.ysb.imdb.booster.domain
 
-import io.ysb.imdb.booster.domain.port.input.RateTitleUseCase
-import io.ysb.imdb.booster.domain.port.output.GetTitleRatingPort
-import io.ysb.imdb.booster.domain.port.output.SetTitleRatingPort
+import io.ysb.imdb.booster.port.input.RateTitleUseCase
+import io.ysb.imdb.booster.port.output.GetTitleRatingPort
+import io.ysb.imdb.booster.port.output.SetTitleRatingPort
 
 class RatingService(
     private val setTitleRatingPort: SetTitleRatingPort,

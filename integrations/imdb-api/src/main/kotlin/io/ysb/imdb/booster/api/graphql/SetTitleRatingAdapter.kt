@@ -2,7 +2,7 @@ package io.ysb.imdb.booster.api.graphql
 
 import io.ysb.imdb.booster.api.graphql.model.UpdateRatingResponse
 import io.ysb.imdb.booster.domain.TitleId
-import io.ysb.imdb.booster.domain.port.output.SetTitleRatingPort
+import io.ysb.imdb.booster.port.output.SetTitleRatingPort
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient

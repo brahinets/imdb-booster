@@ -1,7 +1,7 @@
 package io.ysb.imdb.booster
 
-import io.ysb.imdb.booster.domain.port.input.GetTitleUseCase
-import io.ysb.imdb.booster.domain.port.input.RateTitleUseCase
+import io.ysb.imdb.booster.port.input.GetTitleUseCase
+import io.ysb.imdb.booster.port.input.RateTitleUseCase
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 

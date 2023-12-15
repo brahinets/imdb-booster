@@ -1,8 +1,8 @@
 package io.ysb.imdb.booster.api.search
 
 import io.ysb.imdb.booster.domain.TitleId
-import io.ysb.imdb.booster.domain.port.output.SearchTitleByIdPort
-import io.ysb.imdb.booster.domain.port.output.TitleSuggestion
+import io.ysb.imdb.booster.port.output.SearchTitleByIdPort
+import io.ysb.imdb.booster.port.output.TitleSuggestion
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 

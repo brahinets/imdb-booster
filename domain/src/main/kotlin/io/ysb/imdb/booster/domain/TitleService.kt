@@ -1,10 +1,10 @@
 package io.ysb.imdb.booster.domain
 
-import io.ysb.imdb.booster.domain.port.input.GetTitleUseCase
-import io.ysb.imdb.booster.domain.port.input.Title
-import io.ysb.imdb.booster.domain.port.output.GetTitleRatingPort
-import io.ysb.imdb.booster.domain.port.output.TitleSuggestion
-import io.ysb.imdb.booster.domain.port.output.SearchTitleByIdPort
+import io.ysb.imdb.booster.port.input.GetTitleUseCase
+import io.ysb.imdb.booster.port.input.Title
+import io.ysb.imdb.booster.port.output.GetTitleRatingPort
+import io.ysb.imdb.booster.port.output.SearchTitleByIdPort
+import io.ysb.imdb.booster.port.output.TitleSuggestion
 
 class TitleService(
     private val getTitleRatingPort: GetTitleRatingPort,
