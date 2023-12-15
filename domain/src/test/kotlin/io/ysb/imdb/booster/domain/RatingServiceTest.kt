@@ -31,7 +31,7 @@ class RatingServiceTest {
     }
 
     @Test
-    fun `rate title should not rate title with rate`() {
+    fun `rate title should not rate already rated title`() {
         ratingService.rateTitle("tt12345678", 10)
 
         assertEquals(8, titles["tt12345678"])
