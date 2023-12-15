@@ -8,7 +8,9 @@ import org.springframework.web.reactive.function.client.WebClient
 import java.util.Optional
 
 @Component
-class GetTitleRatingAdapter(val imdbClient: WebClient) : GetTitleRatingPort {
+class GetTitleRatingAdapter(
+    private val imdbClient: WebClient
+) : GetTitleRatingPort {
 
     override fun getTitleRating(titleId: TitleId): Optional<Int> {
         val response: Model = doRequest(titleId)

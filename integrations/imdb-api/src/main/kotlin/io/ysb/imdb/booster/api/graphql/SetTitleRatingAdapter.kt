@@ -8,7 +8,9 @@ import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
 
 @Component
-class SetTitleRatingAdapter(val imdbClient: WebClient) : SetTitleRatingPort {
+class SetTitleRatingAdapter(
+    private val imdbClient: WebClient
+) : SetTitleRatingPort {
 
     override fun setTitleRating(titleId: TitleId, rating: Int) {
         doRequest(titleId, rating)
