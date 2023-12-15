@@ -54,7 +54,7 @@ class RatingServiceTest {
 
     private inner class TestGetTitleRatingPort : GetTitleRatingPort {
         override fun getTitleRating(titleId: TitleId): Optional<Int> {
-            return Optional.ofNullable(titles[titleId]);
+            return Optional.ofNullable(titles[titleId])
         }
     }
 
