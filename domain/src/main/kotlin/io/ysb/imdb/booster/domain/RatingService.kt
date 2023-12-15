@@ -17,7 +17,14 @@ class RatingService(
 
         val titleRating = getTitleRatingPort.getTitleRating(titleId)
         if (titleRating.isPresent) {
-            logger.info { "Skip rating $titleId due to it is already rated" }
+            val savedRaring = titleRating.get()
+
+            if (savedRaring == rating) {
+                logger.info { "Skip rating $titleId due to it is already rated to same score: $rating" }
+            } else {
+                logger.warn { "Skip rating $titleId due to score conflict. Title already has score $savedRaring but requested $rating" }
+            }
+
             return
         }
 
