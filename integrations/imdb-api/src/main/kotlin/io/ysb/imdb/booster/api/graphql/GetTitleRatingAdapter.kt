@@ -5,7 +5,7 @@ import io.ysb.imdb.booster.domain.TitleId
 import io.ysb.imdb.booster.port.output.GetTitleRatingPort
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
-import java.util.*
+import java.util.Optional
 
 @Component
 class GetTitleRatingAdapter(val imdbClient: WebClient) : GetTitleRatingPort {
