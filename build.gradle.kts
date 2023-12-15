@@ -22,6 +22,8 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":integrations:imdb-api"))
 
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 }
