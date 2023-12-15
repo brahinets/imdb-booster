@@ -20,9 +20,9 @@ class GetTitleRatingAdapter(
             return Optional.empty()
         }
 
-        val value = titles.first().userRating.value
+        val value = titles.first().userRating?.value
 
-        return Optional.of(value)
+        return Optional.ofNullable(value)
     }
 
     private fun doRequest(titleId: TitleId): Model {
