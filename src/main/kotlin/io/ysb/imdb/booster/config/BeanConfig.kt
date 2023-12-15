@@ -22,7 +22,8 @@ class BeanConfig {
     @Bean
     fun ratingService(
         setTitleRatingPort: SetTitleRatingPort,
+        getTitleRatingPort: GetTitleRatingPort,
     ): RatingService {
-        return RatingService(setTitleRatingPort)
+        return RatingService(setTitleRatingPort, getTitleRatingPort)
     }
 }
