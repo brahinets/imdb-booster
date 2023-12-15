@@ -1,0 +1,13 @@
+root = true
+
+[*]
+trim_trailing_whitespace = true
+end_of_line = lf
+insert_final_newline = true
+
+[*.kt]
+charset = utf-8
+indent_style = space
+indent_size = 4
+
+ij_kotlin_name_count_to_use_star_import = 999
