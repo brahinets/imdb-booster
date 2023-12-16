@@ -28,8 +28,8 @@ class RatingService(
             return
         }
 
-        if (rating < 1 || rating > 10) {
-            throw IllegalArgumentException("Rate must be between 1 and 10 (inclusive)")
+        require(rating in 1..10) {
+            "Rate must be between 1 and 10 (inclusive)"
         }
 
         setTitleRatingPort.setTitleRating(titleId, rating)
