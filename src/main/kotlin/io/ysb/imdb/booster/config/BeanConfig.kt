@@ -1,8 +1,12 @@
 package io.ysb.imdb.booster.config
 
+import io.ysb.imdb.booster.domain.LoadingService
 import io.ysb.imdb.booster.domain.MatchingService
 import io.ysb.imdb.booster.domain.RatingService
 import io.ysb.imdb.booster.domain.TitleService
+import io.ysb.imdb.booster.port.input.GetTitleUseCase
+import io.ysb.imdb.booster.port.input.MatchTitleUseCase
+import io.ysb.imdb.booster.port.input.RateTitleUseCase
 import io.ysb.imdb.booster.port.output.GetTitleRatingPort
 import io.ysb.imdb.booster.port.output.SearchTitleByIdPort
 import io.ysb.imdb.booster.port.output.SetTitleRatingPort
@@ -31,5 +35,18 @@ class BeanConfig {
         getTitleRatingPort: GetTitleRatingPort,
     ): RatingService {
         return RatingService(setTitleRatingPort, getTitleRatingPort)
+    }
+
+    @Bean
+    fun loadingService(
+        matchTitleUseCase: MatchTitleUseCase,
+        getTitleUseCase: GetTitleUseCase,
+        rateTitleUseCase: RateTitleUseCase,
+    ): LoadingService {
+        return LoadingService(
+            matchTitleUseCase,
+            getTitleUseCase,
+            rateTitleUseCase,
+        )
     }
 }
