@@ -33,6 +33,7 @@ allprojects {
 
     dependencies {
         implementation("io.github.oshai:kotlin-logging-jvm:5.1.1")
+        implementation("org.slf4j:slf4j-api:2.0.9")
     }
 }
 
