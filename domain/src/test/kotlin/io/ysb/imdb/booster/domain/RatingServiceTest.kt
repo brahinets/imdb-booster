@@ -38,15 +38,17 @@ class RatingServiceTest {
 
     @Test
     fun `min allowed score is 1`() {
-        assertThrows<IllegalArgumentException>(
-            "Rate must be between 1 and 10 (inclusive)"
-        ) { ratingService.rateTitle("tt87654321", 0) }
+        val error = assertThrows<IllegalArgumentException> {
+            ratingService.rateTitle("tt87654321", 0)
+        }
+        assertEquals("Rate must be between 1 and 10 (inclusive)", error.message)
     }
 
     @Test
     fun `max allowed score is 10`() {
-        assertThrows<IllegalArgumentException>(
-            "Rate must be between 1 and 10 (inclusive)"
-        ) { ratingService.rateTitle("tt87654321", 11) }
+        val error = assertThrows<IllegalArgumentException> {
+            ratingService.rateTitle("tt87654321", 11)
+        }
+        assertEquals("Rate must be between 1 and 10 (inclusive)", error.message)
     }
 }
