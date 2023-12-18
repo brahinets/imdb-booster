@@ -4,12 +4,14 @@ import io.ysb.imdb.booster.port.output.LocalTitle
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import java.io.StringReader
 
 class LoadLocalRatingsAdapterTest {
 
     private lateinit var loadLocalRatingsAdapter: LoadLocalRatingsAdapter
-
 
     @BeforeEach
     fun setUp() {
@@ -28,8 +30,7 @@ class LoadLocalRatingsAdapterTest {
         )
 
         assertEquals(
-            listOf(LocalTitle("Ultra", "tt0100835", 9, 1991, setOf("Drama", "Sport"))),
-            loadLocalTitles
+            listOf(LocalTitle("Ultra", "tt0100835", 9, 1991, setOf("Drama", "Sport"))), loadLocalTitles
         )
     }
 
@@ -49,5 +50,25 @@ class LoadLocalRatingsAdapterTest {
             listOf(LocalTitle("Ultra", "tt0100835", 9, 1991, setOf("Drama", "Sport"))),
             loadLocalTitles
         )
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            ";9;;Ultra;;;;;1991;Drama, Sport;;;", // missing title id
+            "tt0100835;9;;;;;;;1991;Drama, Sport;;;", // missing title name
+            "tt0100835;;;Ultra;;;;;1991;Drama, Sport;;;", // missing rating
+            "tt0100835;9;;Ultra;;;;;;Drama, Sport;;;" // missing year
+        ]
+    )
+    fun failLoadTitleWithMissingRequiredFields(limitedTitle: String) {
+        val error = assertThrows<IllegalArgumentException> {
+            val header =
+                "Const;Your Rating;Date Rated;Title;URL;Title Type;IMDb Rating;Runtime (mins);Year;Genres;Num Votes;Release Date;Directors"
+            loadLocalRatingsAdapter.loadLocalTitles(
+                StringReader(header + "\n" + limitedTitle)
+            )
+        }
+        assertEquals("Failed to parse CSV. Some required field are missing in csv", error.message)
     }
 }
