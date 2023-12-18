@@ -9,6 +9,7 @@ class LoadLocalRatingsAdapter : io.ysb.imdb.booster.port.output.LoadLocalRatings
     override fun loadLocalTitles(reader: Reader): List<LocalTitle> {
         val records = CsvToBeanBuilder<ImdbRatingsExportModel>(reader)
             .withType(ImdbRatingsExportModel::class.java)
+            .withIgnoreLeadingWhiteSpace(true)
             .withSeparator(';')
             .build()
             .parse()
@@ -19,7 +20,7 @@ class LoadLocalRatingsAdapter : io.ysb.imdb.booster.port.output.LoadLocalRatings
                 id = it.titleId,
                 myRating = it.yourRating.toInt(),
                 year = it.year.toInt(),
-                genres = it.genres.split(",").toSet()
+                genres = it.genres.split(",").map { genre -> genre.trim() }.toSet()
             )
         }
     }
