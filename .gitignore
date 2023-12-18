@@ -3,4 +3,4 @@
 build/
 out/
 .idea
-ratings.csv
+ratings*.csv
