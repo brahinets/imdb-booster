@@ -1,14 +1,18 @@
 package io.ysb.imdb.booster.config
 
+import io.ysb.imdb.booster.domain.BatchLoadingService
 import io.ysb.imdb.booster.domain.LoadingService
 import io.ysb.imdb.booster.domain.MatchingService
 import io.ysb.imdb.booster.domain.RatingService
 import io.ysb.imdb.booster.domain.TitleService
 import io.ysb.imdb.booster.filesystem.LoadLocalRatingsAdapter
+import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
 import io.ysb.imdb.booster.port.input.GetTitleUseCase
+import io.ysb.imdb.booster.port.input.LoadRatingUseCase
 import io.ysb.imdb.booster.port.input.MatchTitleUseCase
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
 import io.ysb.imdb.booster.port.output.GetTitleRatingPort
+import io.ysb.imdb.booster.port.output.LoadLocalRatingsPort
 import io.ysb.imdb.booster.port.output.SearchTitleByIdPort
 import io.ysb.imdb.booster.port.output.SetTitleRatingPort
 import org.springframework.context.annotation.Bean
@@ -54,5 +58,16 @@ class BeanConfig {
     @Bean
     fun loadLocalRatingsAdapter(): LoadLocalRatingsAdapter {
         return LoadLocalRatingsAdapter()
+    }
+
+    @Bean
+    fun batchLoadRatingUseCase(
+        loadRatingUseCase: LoadRatingUseCase,
+        loadLocalRatingsPort: LoadLocalRatingsPort
+    ): BatchLoadRatingUseCase {
+        return BatchLoadingService(
+            loadRatingUseCase,
+            loadLocalRatingsPort
+        )
     }
 }

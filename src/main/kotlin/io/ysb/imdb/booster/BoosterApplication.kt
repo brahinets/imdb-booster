@@ -1,9 +1,10 @@
 package io.ysb.imdb.booster
 
-import io.ysb.imdb.booster.port.input.LoadRatingUseCase
-import io.ysb.imdb.booster.port.input.LoadingTitle
+import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import java.nio.file.Files
+import java.nio.file.Paths
 
 @SpringBootApplication
 class BoosterApplication
@@ -11,7 +12,7 @@ class BoosterApplication
 fun main(args: Array<String>) {
     val context = runApplication<BoosterApplication>(*args)
 
-    val titleApi = context.getBean(LoadRatingUseCase::class.java)
+    val titleApi = context.getBean(BatchLoadRatingUseCase::class.java)
 
-    titleApi.loadRating(LoadingTitle("tt14524712", "Beckham", 2023, 8))
+    titleApi.batchLoadRating(Files.newBufferedReader(Paths.get("./ratings.csv")))
 }
