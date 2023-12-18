@@ -35,7 +35,15 @@ allprojects {
     dependencies {
         implementation("io.github.oshai:kotlin-logging-jvm:5.1.1")
         implementation("org.slf4j:slf4j-api:2.0.9")
+
+        testImplementation(platform("org.junit:junit-bom:5.10.1"))
+        testImplementation("org.junit.jupiter:junit-jupiter")
     }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
+
 }
 
 tasks.withType<KotlinCompile> {
@@ -43,8 +51,4 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs += "-Xjsr305=strict"
         jvmTarget = "21"
     }
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
 }
