@@ -4,6 +4,7 @@ import io.ysb.imdb.booster.domain.LoadingService
 import io.ysb.imdb.booster.domain.MatchingService
 import io.ysb.imdb.booster.domain.RatingService
 import io.ysb.imdb.booster.domain.TitleService
+import io.ysb.imdb.booster.filesystem.LoadLocalRatingsAdapter
 import io.ysb.imdb.booster.port.input.GetTitleUseCase
 import io.ysb.imdb.booster.port.input.MatchTitleUseCase
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
@@ -48,5 +49,10 @@ class BeanConfig {
             getTitleUseCase,
             rateTitleUseCase,
         )
+    }
+
+    @Bean
+    fun loadLocalRatingsAdapter(): LoadLocalRatingsAdapter {
+        return LoadLocalRatingsAdapter()
     }
 }

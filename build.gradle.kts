@@ -17,6 +17,7 @@ java {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":integrations:imdb-api"))
+    implementation(project(":integrations:file-system-api"))
 
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 
