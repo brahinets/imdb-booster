@@ -23,12 +23,12 @@ class LoadingService(
 
         val matched: Boolean = matchLocalAndRemote(title)
         if (matched.not()) {
-            logger.info { "Skip loading rating for ${title.id} due to it is not matched with site data" }
+            logger.warn { "Skip loading rating for ${title.id} due to it is not matched with site data" }
             return
         }
 
         if (SUPPORTED_TITLES.contains(title.type).not()) {
-            logger.info { "Skip loading rating for ${title.id} due to it is not supported type: ${title.type}. Only ${SUPPORTED_TITLES.contentToString()} are supported" }
+            logger.warn { "Skip loading rating for ${title.id} due to it is not supported type: ${title.type}. Only ${SUPPORTED_TITLES.contentToString()} are supported" }
             return
         }
 
