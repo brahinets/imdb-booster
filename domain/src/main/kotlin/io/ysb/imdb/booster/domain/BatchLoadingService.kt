@@ -22,7 +22,7 @@ class BatchLoadingService(
         logger.info { "Found ${loadLocalTitles.size} titles" }
 
         loadLocalTitles.forEachIndexed { index, it ->
-            logger.info { "Loading title ${it.name}. (${index + 1} of ${loadLocalTitles.size})" }
+            logger.info { "Loading title ${it.id} named '${it.name}'. (${index + 1} of ${loadLocalTitles.size})" }
 
             loadRatingUseCase.loadRating(
                 LoadingTitle(
