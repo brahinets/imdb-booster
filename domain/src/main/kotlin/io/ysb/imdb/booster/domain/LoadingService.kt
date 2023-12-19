@@ -9,14 +9,14 @@ import io.ysb.imdb.booster.port.input.MatchingTitle
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
 import io.ysb.imdb.booster.port.input.TitleType
 
+private val SUPPORTED_TITLES: Array<TitleType> = arrayOf(TitleType.MOVIE)
+
 class LoadingService(
     private val matchTitleUseCase: MatchTitleUseCase,
     private val getTitleUseCase: GetTitleUseCase,
     private val rateTitleUseCase: RateTitleUseCase,
 ) : LoadRatingUseCase {
-
     private val logger = KotlinLogging.logger {}
-    private val SUPPORTED_TITLES: Array<TitleType> = arrayOf(TitleType.MOVIE)
 
     override fun loadRating(title: LoadingTitle) {
         logger.info { "Loading rating for ${title.id}" }
