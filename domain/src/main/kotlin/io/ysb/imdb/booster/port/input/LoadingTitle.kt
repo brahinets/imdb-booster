@@ -6,5 +6,6 @@ data class LoadingTitle(
     val id: TitleId,
     val name: String,
     val year: Int,
-    val myRating: Int
+    val myRating: Int,
+    val type: TitleType
 )

@@ -2,6 +2,7 @@ package io.ysb.imdb.booster.filesystem
 
 import com.opencsv.bean.CsvToBeanBuilder
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException
+import io.ysb.imdb.booster.port.input.TitleType
 import io.ysb.imdb.booster.port.output.LocalTitle
 import java.io.Reader
 
@@ -21,6 +22,7 @@ class LoadLocalRatingsAdapter : io.ysb.imdb.booster.port.output.LoadLocalRatings
                     name = it.title,
                     id = it.titleId,
                     myRating = it.yourRating.toInt(),
+                    type = TitleType.from(it.titleType),
                     year = it.year.toInt(),
                     genres = it.genres.split(",").map { genre -> genre.trim() }.toSet()
                 )

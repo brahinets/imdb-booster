@@ -7,6 +7,7 @@ import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.MatchTitleUseCase
 import io.ysb.imdb.booster.port.input.MatchingTitle
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
+import io.ysb.imdb.booster.port.input.TitleType
 
 class LoadingService(
     private val matchTitleUseCase: MatchTitleUseCase,
@@ -15,17 +16,24 @@ class LoadingService(
 ) : LoadRatingUseCase {
 
     private val logger = KotlinLogging.logger {}
+    private val SUPPORTED_TITLES: Array<TitleType> = arrayOf(TitleType.MOVIE)
 
     override fun loadRating(title: LoadingTitle) {
         logger.info { "Loading rating for ${title.id}" }
 
         val matched: Boolean = matchLocalAndRemote(title)
-        if (matched) {
-            logger.info { "Successfully matched ${title.id} with site data. Rating it with ${title.myRating}" }
-            rateTitleUseCase.rateTitle(title.id, title.myRating)
-        } else {
+        if (!matched) {
             logger.info { "Skip loading rating for ${title.id} due to it is not matched with site data" }
+            return
         }
+
+        if (!SUPPORTED_TITLES.contains(title.type)) {
+            logger.info { "Skip loading rating for ${title.id} due to it is not supported type: ${title.type}. Only ${SUPPORTED_TITLES.contentToString()} are supported" }
+            return
+        }
+
+        logger.info { "Successfully matched ${title.id} with site data" }
+        rateTitleUseCase.rateTitle(title.id, title.myRating)
     }
 
     private fun matchLocalAndRemote(title: LoadingTitle): Boolean {

@@ -2,6 +2,7 @@ package io.ysb.imdb.booster.domain
 
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.Title
+import io.ysb.imdb.booster.port.input.TitleType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -22,10 +23,24 @@ class LoadingServiceTest {
             }
         )
 
-        val title = LoadingTitle("tt12345678", "Movie-Movie", 2020, 10)
+        val title = LoadingTitle("tt12345678", "Movie-Movie", 2020, 10, TitleType.MOVIE)
         loadingService.loadRating(title)
 
         assertEquals(10, titles["tt12345678"]!!.myRating)
+    }
+
+    @Test
+    fun `should not rate irregular titles types`() {
+        val loadingService = LoadingService(
+            { _, _ -> true },
+            { titleId -> titles[titleId]!! },
+            { _, _ -> throw IllegalStateException("Should not be called") }
+        )
+
+        val title = LoadingTitle("tt87654321", "Movie Movie 2", 2020, 10, TitleType.VIDEO_GAME)
+        loadingService.loadRating(title)
+
+        assertEquals(7, titles["tt87654321"]!!.myRating)
     }
 
     @Test
@@ -36,7 +51,7 @@ class LoadingServiceTest {
             { _, _ -> throw IllegalStateException("Should not be called") }
         )
 
-        val title = LoadingTitle("tt87654321", "Movie Movie 2", 2020, 10)
+        val title = LoadingTitle("tt87654321", "Movie Movie 2", 2020, 10, TitleType.MOVIE)
         loadingService.loadRating(title)
 
         assertEquals(7, titles["tt87654321"]!!.myRating)

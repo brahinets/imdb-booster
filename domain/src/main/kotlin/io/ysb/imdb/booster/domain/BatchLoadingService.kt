@@ -29,7 +29,8 @@ class BatchLoadingService(
                     id = it.id,
                     name = it.name,
                     year = it.year,
-                    myRating = it.myRating
+                    myRating = it.myRating,
+                    type = it.type
                 )
             )
         }
