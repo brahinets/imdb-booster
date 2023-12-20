@@ -5,11 +5,11 @@ import io.ysb.imdb.booster.domain.LoadingService
 import io.ysb.imdb.booster.domain.MatchingService
 import io.ysb.imdb.booster.domain.RatingService
 import io.ysb.imdb.booster.domain.TitleService
+import io.ysb.imdb.booster.domain.loader.MovieLoader
 import io.ysb.imdb.booster.filesystem.LoadLocalRatingsAdapter
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
 import io.ysb.imdb.booster.port.input.GetTitleUseCase
 import io.ysb.imdb.booster.port.input.LoadRatingUseCase
-import io.ysb.imdb.booster.port.input.MatchTitleUseCase
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
 import io.ysb.imdb.booster.port.output.GetTitleRatingPort
 import io.ysb.imdb.booster.port.output.LoadLocalRatingsPort
@@ -44,14 +44,21 @@ class BeanConfig {
 
     @Bean
     fun loadingService(
-        matchTitleUseCase: MatchTitleUseCase,
-        getTitleUseCase: GetTitleUseCase,
-        rateTitleUseCase: RateTitleUseCase,
+        movieLoader: MovieLoader
     ): LoadingService {
         return LoadingService(
-            matchTitleUseCase,
+            movieLoader
+        )
+    }
+
+    @Bean
+    fun movieLoader(
+        getTitleUseCase: GetTitleUseCase,
+        rateTitleUseCase: RateTitleUseCase
+    ): MovieLoader {
+        return MovieLoader(
             getTitleUseCase,
-            rateTitleUseCase,
+            rateTitleUseCase
         )
     }
 

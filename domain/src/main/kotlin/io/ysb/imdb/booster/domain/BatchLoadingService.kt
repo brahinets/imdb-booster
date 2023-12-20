@@ -15,8 +15,6 @@ class BatchLoadingService(
     private val logger = KotlinLogging.logger {}
 
     override fun batchLoadRating(reader: Reader) {
-        logger.info { "Start batch loading" }
-
         val loadLocalTitles = loadLocalRatingsPort.loadLocalTitles(reader)
 
         logger.info { "Found ${loadLocalTitles.size} titles" }
