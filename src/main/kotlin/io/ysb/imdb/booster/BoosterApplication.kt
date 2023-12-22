@@ -14,5 +14,7 @@ fun main(args: Array<String>) {
 
     val titleApi = context.getBean(BatchLoadRatingUseCase::class.java)
 
-    titleApi.batchLoadRating(Files.newBufferedReader(Paths.get("./ratings.csv")))
+    Files.newBufferedReader(Paths.get("./ratings.csv")).use {
+        titleApi.batchLoadRating(it)
+    }
 }
