@@ -10,12 +10,17 @@ import org.springframework.web.reactive.function.client.WebClient
 class SearchTitleByIdAdapter(val imdbClient: WebClient) : SearchTitleByIdPort {
 
     override fun searchTitleById(titleId: TitleId): TitleSuggestion {
-        val response = doRequest(titleId).d.first()
+        val autoSuggestItems = doRequest(titleId).d
+        val result = autoSuggestItems.firstOrNull { it.id == titleId }
+
+        if (result == null) {
+            throw RuntimeException("Title with id $titleId not found on remote service")
+        }
 
         return TitleSuggestion(
-            response.id,
-            response.title!!,
-            response.year
+            result.id,
+            result.title!!,
+            result.year
         )
     }
 
