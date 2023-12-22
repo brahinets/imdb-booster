@@ -14,7 +14,7 @@ class SearchTitleByIdAdapter(val imdbClient: WebClient) : SearchTitleByIdPort {
 
         return TitleSuggestion(
             response.id,
-            response.title,
+            response.title!!,
             response.year
         )
     }
