@@ -1,5 +1,7 @@
 package io.ysb.imdb.booster.port.output
 
+import java.util.Optional
+
 fun interface SearchMovieByNamePort {
-    fun searchMovieByName(titleName: String): TitleSuggestion
+    fun searchMovieByName(titleName: String): Optional<TitleSuggestion>
 }

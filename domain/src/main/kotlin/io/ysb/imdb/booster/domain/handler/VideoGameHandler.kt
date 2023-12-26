@@ -19,7 +19,13 @@ class VideoGameHandler(
         }
 
         logger.info { "Auto-mapping game ${title.id} and name '${title.name}' to movie" }
-        val movie = searchMovieByNamePort.searchMovieByName(title.name)
+        val mappedMovie = searchMovieByNamePort.searchMovieByName(title.name)
+        if (mappedMovie.isEmpty) {
+            logger.warn { "Skip handling game ${title.id} '${title.name}' due to it can not be uniquely mapped to movie" }
+            return
+        }
+
+        val movie = mappedMovie.get()
         logger.info { "Mapped game ${title.id} and name '${title.name}' to movie ${movie.id} with name '${movie.title}'" }
 
         logger.info { "Loading movie ${movie.id} '${movie.title}' instead of game ${title.id} '${title.name}'" }
