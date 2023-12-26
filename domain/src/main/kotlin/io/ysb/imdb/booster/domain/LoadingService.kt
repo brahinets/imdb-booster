@@ -21,6 +21,6 @@ class LoadingService(
             return
         }
 
-        logger.warn { "Skip loading rating for ${title.id} due to it is not supported type: ${title.type}. Only ${SUPPORTED_TITLES.contentToString()} are supported" }
+        logger.warn { "Skip loading rating for ${title.id} '${title.name}' due to it is not supported type: ${title.type}. Only ${SUPPORTED_TITLES.contentToString()} are supported" }
     }
 }
