@@ -32,7 +32,7 @@ class SearchMovieByNameAdapter(val imdbClient: WebClient) : SearchMovieByNamePor
     private fun doRequest(titleId: TitleId): SuggestionModel {
         return imdbClient
             .get()
-            .uri("https://v3.sg.media-imdb.com/suggestion/x/${titleId}.json")
+            .uri("https://v3.sg.media-imdb.com/suggestion/x/${URLEncoder.encode(titleId, UTF_8)}.json")
             .retrieve()
             .bodyToMono(SuggestionModel::class.java)
             .block()!!
