@@ -1,7 +1,7 @@
 package io.ysb.imdb.booster.domain
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ysb.imdb.booster.domain.loader.TitleLoader
+import io.ysb.imdb.booster.domain.handler.TitleHandler
 import io.ysb.imdb.booster.port.input.LoadRatingUseCase
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.TitleType
@@ -9,7 +9,7 @@ import io.ysb.imdb.booster.port.input.TitleType
 private val SUPPORTED_TITLES: Array<TitleType> = arrayOf(TitleType.MOVIE)
 
 class LoadingService(
-    private val movieLoader: TitleLoader
+    private val movieHandler: TitleHandler
 ) : LoadRatingUseCase {
     private val logger = KotlinLogging.logger {}
 
@@ -17,7 +17,7 @@ class LoadingService(
         logger.info { "Loading rating for ${title.id}" }
 
         if (title.type == TitleType.MOVIE) {
-            movieLoader.loadTitle(title)
+            movieHandler.handle(title)
             return
         }
 

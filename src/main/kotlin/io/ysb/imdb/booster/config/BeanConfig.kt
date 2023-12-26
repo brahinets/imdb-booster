@@ -5,6 +5,7 @@ import io.ysb.imdb.booster.domain.LoadingService
 import io.ysb.imdb.booster.domain.MatchingService
 import io.ysb.imdb.booster.domain.RatingService
 import io.ysb.imdb.booster.domain.TitleService
+import io.ysb.imdb.booster.domain.handler.MovieHandler
 import io.ysb.imdb.booster.domain.loader.MovieLoader
 import io.ysb.imdb.booster.filesystem.LoadLocalRatingsAdapter
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
@@ -44,11 +45,18 @@ class BeanConfig {
 
     @Bean
     fun loadingService(
-        movieLoader: MovieLoader
+        movieHandler: MovieHandler
     ): LoadingService {
         return LoadingService(
-            movieLoader
+            movieHandler
         )
+    }
+
+    @Bean
+    fun movieHandler(
+        movieLoader: MovieLoader
+    ): MovieHandler {
+        return MovieHandler(movieLoader)
     }
 
     @Bean
