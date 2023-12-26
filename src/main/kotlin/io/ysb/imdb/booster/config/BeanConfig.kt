@@ -6,6 +6,8 @@ import io.ysb.imdb.booster.domain.MatchingService
 import io.ysb.imdb.booster.domain.RatingService
 import io.ysb.imdb.booster.domain.TitleService
 import io.ysb.imdb.booster.domain.handler.MovieHandler
+import io.ysb.imdb.booster.domain.handler.TitleHandler
+import io.ysb.imdb.booster.domain.handler.VideoGameHandler
 import io.ysb.imdb.booster.domain.loader.MovieLoader
 import io.ysb.imdb.booster.filesystem.LoadLocalRatingsAdapter
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
@@ -14,6 +16,7 @@ import io.ysb.imdb.booster.port.input.LoadRatingUseCase
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
 import io.ysb.imdb.booster.port.output.GetTitleRatingPort
 import io.ysb.imdb.booster.port.output.LoadLocalRatingsPort
+import io.ysb.imdb.booster.port.output.SearchMovieByNamePort
 import io.ysb.imdb.booster.port.output.SearchTitleByIdPort
 import io.ysb.imdb.booster.port.output.SetTitleRatingPort
 import org.springframework.context.annotation.Bean
@@ -45,10 +48,12 @@ class BeanConfig {
 
     @Bean
     fun loadingService(
-        movieHandler: MovieHandler
+        movieHandler: TitleHandler,
+        videoGameHandler: TitleHandler
     ): LoadingService {
         return LoadingService(
-            movieHandler
+            movieHandler,
+            videoGameHandler
         )
     }
 
@@ -67,6 +72,17 @@ class BeanConfig {
         return MovieLoader(
             getTitleUseCase,
             rateTitleUseCase
+        )
+    }
+
+    @Bean
+    fun videoGameHandler(
+        searchMovieByName: SearchMovieByNamePort,
+        movieHandler: TitleHandler
+    ): VideoGameHandler {
+        return VideoGameHandler(
+            searchMovieByName,
+            movieHandler
         )
     }
 
