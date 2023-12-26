@@ -21,6 +21,11 @@ class LoadingService(
             return
         }
 
+        if (title.type == TitleType.TV_MINI_SERIES) {
+            logger.info { "Skip loading ${title.id}. TV Mini-Series require manual validation and should be processed manually ${title.type}" }
+            return
+        }
+
         logger.warn { "Skip loading rating '${title.myRating}' for ${title.id} '${title.name}' due to it is not supported type: ${title.type}. Only ${SUPPORTED_TITLES.contentToString()} are supported" }
     }
 }
