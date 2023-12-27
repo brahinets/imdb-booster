@@ -21,6 +21,6 @@ data class D(
     @JsonProperty("q") val q: String?,
     @JsonProperty("qid") val qid: String?,
     @JsonProperty("rank") val rank: Int?,
-    @JsonProperty("s") val s: String,
+    @JsonProperty("s") val s: String?,
     @JsonProperty("y") val year: Int
 )
