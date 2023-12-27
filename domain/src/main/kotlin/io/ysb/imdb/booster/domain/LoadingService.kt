@@ -27,8 +27,8 @@ class LoadingService(
             return
         }
 
-        if (title.type == TitleType.TV_MINI_SERIES) {
-            logger.info { "Skip loading ${title.id}. TV Mini-Series require manual validation and should be processed manually ${title.type}" }
+        if (title.type == TitleType.TV_MINI_SERIES || title.type == TitleType.TV_MOVIE) {
+            logger.info { "Skip loading ${title.id} (${title.type}). TV's require manual validation and should be processed manually" }
             return
         }
 
