@@ -11,7 +11,8 @@ private val SUPPORTED_TITLES: Array<TitleType> = arrayOf(TitleType.MOVIE)
 class LoadingService(
     private val movieHandler: TitleHandler,
     private val videoGameHandler: TitleHandler,
-    private val tvSeriesHandler: TitleHandler
+    private val tvSeriesHandler: TitleHandler,
+    private val shortsHandler: TitleHandler
 ) : LoadRatingUseCase {
     private val logger = KotlinLogging.logger {}
 
@@ -25,6 +26,11 @@ class LoadingService(
 
         if (title.type == TitleType.VIDEO_GAME) {
             videoGameHandler.handle(title)
+            return
+        }
+
+        if (title.type == TitleType.SHORT) {
+            shortsHandler.handle(title)
             return
         }
 
