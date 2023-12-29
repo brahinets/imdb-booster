@@ -24,7 +24,8 @@ class SearchMovieByNameAdapter(val imdbClient: WebClient) : SearchMovieByNamePor
             TitleSuggestion(
                 result.id,
                 result.title!!,
-                result.year
+                result.year,
+                result.s?.split(",")?.toSet()
             )
         )
     }
