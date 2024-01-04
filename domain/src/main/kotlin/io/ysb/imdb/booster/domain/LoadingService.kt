@@ -11,7 +11,6 @@ private val SUPPORTED_TITLES: Array<TitleType> = arrayOf(TitleType.MOVIE)
 class LoadingService(
     private val movieHandler: TitleHandler,
     private val videoGameHandler: TitleHandler,
-    private val tvSeriesHandler: TitleHandler,
     private val shortsHandler: TitleHandler
 ) : LoadRatingUseCase {
     private val logger = KotlinLogging.logger {}
@@ -34,14 +33,10 @@ class LoadingService(
             return
         }
 
-        if (title.type == TitleType.TV_SERIES) {
-            tvSeriesHandler.handle(title)
-            return
-        }
-
         if (title.type == TitleType.TV_MINI_SERIES ||
             title.type == TitleType.TV_SHORT ||
-            title.type == TitleType.TV_MOVIE
+            title.type == TitleType.TV_MOVIE ||
+            title.type == TitleType.TV_SERIES
         ) {
             logger.info { "Skip loading ${title.id} (${title.type}). TV's require manual validation and should be processed manually" }
             return
