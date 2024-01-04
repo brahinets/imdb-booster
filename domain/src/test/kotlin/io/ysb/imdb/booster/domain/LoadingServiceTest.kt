@@ -32,7 +32,7 @@ class LoadingServiceTest {
             { _ -> throw IllegalStateException("Should not be called") },
         )
 
-        val title = LoadingTitle("tt87654321", "Movie Movie 2", 2020, 10, TitleType.SHORT)
+        val title = LoadingTitle("tt87654321", "Movie Movie 2", 2020, 10, TitleType.VIDEO)
         loadingService.loadRating(title)
 
         assertTrue(loadedTitles.isEmpty())

@@ -42,6 +42,11 @@ class LoadingService(
             return
         }
 
+        if (title.type == TitleType.VIDEO) {
+            logger.info { "Skip loading ${title.id} (${title.type}). Video's require manual validation and should be processed manually" }
+            return
+        }
+
         logger.warn { "Skip loading rating '${title.myRating}' for ${title.id} '${title.name}' due to it is not supported type: ${title.type}. Only ${SUPPORTED_TITLES.contentToString()} are supported" }
     }
 }
