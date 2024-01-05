@@ -3,12 +3,12 @@ package io.ysb.imdb.booster.filesystem
 import com.opencsv.bean.CsvToBeanBuilder
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException
 import io.ysb.imdb.booster.port.input.TitleType
-import io.ysb.imdb.booster.port.output.LocalTitle
+import io.ysb.imdb.booster.port.output.ImdbLocalTitle
 import java.io.Reader
 
 class LoadLocalRatingsAdapter : io.ysb.imdb.booster.port.output.LoadLocalRatingsPort {
 
-    override fun loadLocalTitles(reader: Reader): List<LocalTitle> {
+    override fun loadLocalTitles(reader: Reader): List<ImdbLocalTitle> {
         try {
             val records = CsvToBeanBuilder<ImdbRatingsExportModel>(reader)
                 .withType(ImdbRatingsExportModel::class.java)
@@ -18,7 +18,7 @@ class LoadLocalRatingsAdapter : io.ysb.imdb.booster.port.output.LoadLocalRatings
                 .parse()
 
             return records.map {
-                LocalTitle(
+                ImdbLocalTitle(
                     name = it.title,
                     id = it.titleId,
                     myRating = it.yourRating.toInt(),

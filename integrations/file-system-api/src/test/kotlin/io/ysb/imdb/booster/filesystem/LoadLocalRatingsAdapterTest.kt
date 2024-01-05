@@ -1,7 +1,7 @@
 package io.ysb.imdb.booster.filesystem
 
 import io.ysb.imdb.booster.port.input.TitleType
-import io.ysb.imdb.booster.port.output.LocalTitle
+import io.ysb.imdb.booster.port.output.ImdbLocalTitle
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,7 +31,7 @@ class LoadLocalRatingsAdapterTest {
         )
 
         assertEquals(
-            listOf(LocalTitle("Ultra", "tt0100835", 9, TitleType.MOVIE, 1991, setOf("Drama", "Sport"))), loadLocalTitles
+            listOf(ImdbLocalTitle("Ultra", "tt0100835", 9, TitleType.MOVIE, 1991, setOf("Drama", "Sport"))), loadLocalTitles
         )
     }
 
@@ -48,7 +48,7 @@ class LoadLocalRatingsAdapterTest {
         )
 
         assertEquals(
-            listOf(LocalTitle("Ultra", "tt0100835", 9, TitleType.MOVIE ,1991, setOf("Drama", "Sport"))),
+            listOf(ImdbLocalTitle("Ultra", "tt0100835", 9, TitleType.MOVIE ,1991, setOf("Drama", "Sport"))),
             loadLocalTitles
         )
     }
