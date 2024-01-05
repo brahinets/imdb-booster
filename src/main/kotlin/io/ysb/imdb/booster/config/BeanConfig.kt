@@ -8,6 +8,7 @@ import io.ysb.imdb.booster.domain.TitleService
 import io.ysb.imdb.booster.domain.handler.MovieHandler
 import io.ysb.imdb.booster.domain.handler.ShortsHandler
 import io.ysb.imdb.booster.domain.handler.TitleHandler
+import io.ysb.imdb.booster.domain.handler.TvEpisodeHandler
 import io.ysb.imdb.booster.domain.handler.VideoGameHandler
 import io.ysb.imdb.booster.domain.loader.MovieLoader
 import io.ysb.imdb.booster.filesystem.LoadLocalRatingsAdapter
@@ -51,11 +52,13 @@ class BeanConfig {
     fun loadingService(
         movieHandler: TitleHandler,
         videoGameHandler: TitleHandler,
+        tvEpisodeHandler: TvEpisodeHandler,
         shortsHandler: ShortsHandler
     ): LoadingService {
         return LoadingService(
             movieHandler,
             videoGameHandler,
+            tvEpisodeHandler,
             shortsHandler
         )
     }
@@ -88,6 +91,18 @@ class BeanConfig {
             movieHandler
         )
     }
+
+    @Bean
+    fun tvEpisodeHandler(
+        searchMovieById: SearchTitleByIdPort,
+        searchMovieByName: SearchMovieByNamePort
+    ): TvEpisodeHandler {
+        return TvEpisodeHandler(
+            searchMovieById,
+            searchMovieByName
+        )
+    }
+
 
     @Bean
     fun shortsHandler(

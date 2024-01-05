@@ -16,6 +16,7 @@ class LoadingServiceTest {
             { title -> loadedTitles.addFirst(title.id) },
             { title -> loadedTitles.addFirst(title.id) },
             { title -> loadedTitles.addFirst(title.id) },
+            { title -> loadedTitles.addFirst(title.id) },
         )
 
         val title = LoadingTitle("tt12345678", "Movie-Movie", 2020, 10, TitleType.MOVIE)
@@ -27,6 +28,7 @@ class LoadingServiceTest {
     @Test
     fun `should not rate unsupported titles types`() {
         val loadingService = LoadingService(
+            { _ -> throw IllegalStateException("Should not be called") },
             { _ -> throw IllegalStateException("Should not be called") },
             { _ -> throw IllegalStateException("Should not be called") },
             { _ -> throw IllegalStateException("Should not be called") },
