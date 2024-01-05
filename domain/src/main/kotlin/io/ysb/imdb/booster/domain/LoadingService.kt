@@ -19,40 +19,15 @@ class LoadingService(
     override fun loadRating(title: LoadingTitle) {
         logger.info { "Loading rating for ${title.id}" }
 
-        if (title.type == TitleType.MOVIE) {
-            movieHandler.handle(title)
-            return
+        when (title.type) {
+            TitleType.MOVIE -> movieHandler.handle(title)
+            TitleType.TV_EPISODE -> tvEpisodeHandler.handle(title)
+            TitleType.VIDEO_GAME -> videoGameHandler.handle(title)
+            TitleType.SHORT -> shortsHandler.handle(title)
+            TitleType.VIDEO -> logger.info { "Skip loading ${title.id} (${title.type}). Video's require manual validation and should be processed manually" }
+            TitleType.TV_MINI_SERIES, TitleType.TV_SHORT, TitleType.TV_MOVIE, TitleType.TV_SERIES
+            -> logger.info { "Skip loading ${title.id} (${title.type}). TV's require manual validation and should be processed manually" }
+            else -> logger.warn { "Skip loading rating '${title.myRating}' for ${title.id} '${title.name}' due to it is not supported type: ${title.type}. Only ${SUPPORTED_TITLES.contentToString()} are supported" }
         }
-
-        if (title.type == TitleType.TV_EPISODE) {
-            tvEpisodeHandler.handle(title)
-            return
-        }
-
-        if (title.type == TitleType.VIDEO_GAME) {
-            videoGameHandler.handle(title)
-            return
-        }
-
-        if (title.type == TitleType.SHORT) {
-            shortsHandler.handle(title)
-            return
-        }
-
-        if (title.type == TitleType.TV_MINI_SERIES ||
-            title.type == TitleType.TV_SHORT ||
-            title.type == TitleType.TV_MOVIE ||
-            title.type == TitleType.TV_SERIES
-        ) {
-            logger.info { "Skip loading ${title.id} (${title.type}). TV's require manual validation and should be processed manually" }
-            return
-        }
-
-        if (title.type == TitleType.VIDEO) {
-            logger.info { "Skip loading ${title.id} (${title.type}). Video's require manual validation and should be processed manually" }
-            return
-        }
-
-        logger.warn { "Skip loading rating '${title.myRating}' for ${title.id} '${title.name}' due to it is not supported type: ${title.type}. Only ${SUPPORTED_TITLES.contentToString()} are supported" }
     }
 }
