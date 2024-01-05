@@ -3,12 +3,10 @@ package io.ysb.imdb.booster.domain.handler
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.TitleType
-import io.ysb.imdb.booster.port.output.SearchMovieByNamePort
 import io.ysb.imdb.booster.port.output.SearchTitleByIdPort
 
 class TvEpisodeHandler(
-    private val searchTitleByIdPort: SearchTitleByIdPort,
-    private val searchMovieByNamePort: SearchMovieByNamePort
+    private val searchTitleByIdPort: SearchTitleByIdPort
 ) : TitleHandler {
 
     private val logger = KotlinLogging.logger {}
@@ -20,9 +18,7 @@ class TvEpisodeHandler(
         }
 
         val remoteById = searchTitleByIdPort.searchTitleById(title.id)
-        val remoteByName = searchMovieByNamePort.searchMovieByName(title.name)
 
-        logger.info { "TV-Episode by id ${title.id} has local name '${title.name}' and remote name ${remoteById.title}" }
-        logger.info { "TV-Episode by name '${title.name}' has local id '${title.id}' and remote id ${remoteByName.takeIf { a -> a.isPresent }}" }
+        logger.info { "TV-Episode ${remoteById.id} has name ${remoteById.title} and local name ${title.name} (${ if(title.name == remoteById.title) "matched" else "not matched"}) and has local rating ${title.myRating}. Most likely it is some movie" }
     }
 }
