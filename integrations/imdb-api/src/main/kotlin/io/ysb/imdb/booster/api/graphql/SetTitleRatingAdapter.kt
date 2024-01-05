@@ -1,8 +1,8 @@
 package io.ysb.imdb.booster.api.graphql
 
-import io.ysb.imdb.booster.api.graphql.model.UpdateRatingResponse
 import io.ysb.imdb.booster.domain.TitleId
 import io.ysb.imdb.booster.port.output.SetTitleRatingPort
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
@@ -16,7 +16,7 @@ class SetTitleRatingAdapter(
         doRequest(titleId, rating)
     }
 
-    private fun doRequest(titleId: TitleId, rating: Int): UpdateRatingResponse {
+    private fun doRequest(titleId: TitleId, rating: Int): ResponseEntity<Void>? {
         return imdbClient.post()
             .body(
                 BodyInserters.fromValue(
@@ -24,7 +24,7 @@ class SetTitleRatingAdapter(
                 )
             )
             .retrieve()
-            .bodyToMono(UpdateRatingResponse::class.java)
-            .block()!!
+            .toBodilessEntity()
+            .block()
     }
 }
