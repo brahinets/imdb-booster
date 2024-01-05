@@ -12,9 +12,9 @@ class BoosterApplication
 fun main(args: Array<String>) {
     val context = runApplication<BoosterApplication>(*args)
 
-    val titleApi = context.getBean(BatchLoadRatingUseCase::class.java)
+    val loader = context.getBean(BatchLoadRatingUseCase::class.java)
 
     Files.newBufferedReader(Paths.get("./ratings.csv")).use {
-        titleApi.batchLoadRating(it)
+        loader.batchLoadRating(it)
     }
 }
