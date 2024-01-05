@@ -94,10 +94,14 @@ class BeanConfig {
 
     @Bean
     fun tvEpisodeHandler(
-        searchMovieById: SearchTitleByIdPort
+        movieHandler: MovieHandler,
+        searchMovieById: SearchTitleByIdPort,
+        searchMovieByName: SearchMovieByNamePort
     ): TvEpisodeHandler {
         return TvEpisodeHandler(
-            searchMovieById
+            movieHandler,
+            searchMovieById,
+            searchMovieByName
         )
     }
 
