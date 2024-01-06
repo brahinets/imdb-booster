@@ -12,6 +12,7 @@ import io.ysb.imdb.booster.domain.handler.TvEpisodeHandler
 import io.ysb.imdb.booster.domain.handler.VideoGameHandler
 import io.ysb.imdb.booster.domain.loader.MovieLoader
 import io.ysb.imdb.booster.filesystem.LoadLocalRatingsAdapter
+import io.ysb.imdb.booster.filesystem.LoadLocalVotesAdapter
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
 import io.ysb.imdb.booster.port.input.GetTitleUseCase
 import io.ysb.imdb.booster.port.input.LoadRatingUseCase
@@ -120,6 +121,11 @@ class BeanConfig {
     @Bean
     fun loadLocalRatingsAdapter(): LoadLocalRatingsAdapter {
         return LoadLocalRatingsAdapter()
+    }
+
+    @Bean
+    fun loadLocalVotesAdapter(): LoadLocalVotesAdapter {
+        return LoadLocalVotesAdapter()
     }
 
     @Bean

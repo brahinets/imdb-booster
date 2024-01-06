@@ -1,6 +1,6 @@
 package io.ysb.imdb.booster
 
-import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
+import io.ysb.imdb.booster.port.output.LoadLocalVotesPort
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import java.nio.file.Files
@@ -12,9 +12,9 @@ class BoosterApplication
 fun main(args: Array<String>) {
     val context = runApplication<BoosterApplication>(*args)
 
-    val loader = context.getBean(BatchLoadRatingUseCase::class.java)
+    val loader = context.getBean(LoadLocalVotesPort::class.java)
 
-    Files.newBufferedReader(Paths.get("./ratings.csv")).use {
-        loader.batchLoadRating(it)
+    Files.newBufferedReader(Paths.get("./votes.csv")).use { votesDump ->
+        loader.loadLocalTitles(votesDump).forEach { println(it) }
     }
 }
