@@ -20,14 +20,14 @@ fun main(args: Array<String>) {
 
     Files.newBufferedReader(Paths.get("./votes.csv")).use { votesDump ->
         loader.loadLocalTitles(votesDump).forEach {entry ->
-            val title = if(entry.name == entry.originalName)
-                search.searchMovieByName(entry.name)
+            val title = if(entry.localisedName == entry.originalName)
+                search.searchMovieByName(entry.localisedName)
              else
-                searchLocalised.searchMovieByLocalisedName(entry.name)
+                searchLocalised.searchMovieByLocalisedName(entry.localisedName)
 
             title.ifPresentOrElse(
-                { println("Imdb Movie: ${it.title} (${it.year}) found for ${entry.name} (name matched ${entry.name == it.title})") },
-                { println("Imdb Movie not found for: ${entry.name}") }
+                { println("Imdb Movie: ${it.title} (${it.year}) found for ${entry.localisedName} (name matched ${entry.localisedName == it.title})") },
+                { println("Imdb Movie not found for: ${entry.localisedName}") }
             )
         }
     }
