@@ -19,7 +19,7 @@ class LoadLocalVotesAdapter : io.ysb.imdb.booster.port.output.LoadLocalVotesPort
             return records.map {
                 KpLocalTitle(
                     localisedName = it.localisedTitle,
-                    originalName = if (it.originalTitle.isBlank()) it.localisedTitle else it.originalTitle,
+                    originalName = it.originalTitle.ifBlank { it.localisedTitle },
                     myRating = it.myScore.toInt(),
                     year = it.year.substring(0, 4).toInt(),
                     genres = it.genres.split(",").map { genre -> genre.trim() }.toSet()
