@@ -46,7 +46,7 @@ class SearchMovieByNameAdapter(val imdbClient: WebClient) : SearchMovieByNamePor
         autoSuggestItems: List<D>,
         titleName: String
     ): Optional<TitleSuggestion> {
-        val result = autoSuggestItems.firstOrNull { it.title == titleName && it.qid == "movie" }
+        val result = autoSuggestItems.firstOrNull { it.title?.lowercase() == titleName.lowercase() && it.qid == "movie" }
 
         if (result == null) {
             return Optional.empty()
