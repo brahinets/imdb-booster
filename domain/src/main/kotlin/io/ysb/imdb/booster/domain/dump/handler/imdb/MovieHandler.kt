@@ -1,4 +1,4 @@
-package io.ysb.imdb.booster.domain.handler
+package io.ysb.imdb.booster.domain.dump.handler.imdb
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ysb.imdb.booster.domain.loader.MovieLoader

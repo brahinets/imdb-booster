@@ -1,4 +1,4 @@
-package io.ysb.imdb.booster.domain
+package io.ysb.imdb.booster.domain.dump.handler.imdb
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
