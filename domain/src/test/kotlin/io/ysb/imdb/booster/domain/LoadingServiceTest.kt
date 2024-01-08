@@ -1,5 +1,6 @@
 package io.ysb.imdb.booster.domain
 
+import io.ysb.imdb.booster.domain.dump.handler.imdb.LoadingService
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.TitleType
 import org.junit.jupiter.api.Assertions.assertEquals

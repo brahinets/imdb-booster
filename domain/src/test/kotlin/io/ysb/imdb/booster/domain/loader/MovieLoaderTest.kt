@@ -1,6 +1,7 @@
 package io.ysb.imdb.booster.domain.loader
 
 import io.ysb.imdb.booster.domain.TitleId
+import io.ysb.imdb.booster.domain.rating.MovieLoader
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.Title
 import io.ysb.imdb.booster.port.input.TitleType

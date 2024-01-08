@@ -1,5 +1,6 @@
 package io.ysb.imdb.booster.domain
 
+import io.ysb.imdb.booster.domain.rating.MatchingService
 import io.ysb.imdb.booster.port.input.MatchingTitle
 import org.junit.jupiter.api.Test
 

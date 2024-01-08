@@ -1,6 +1,7 @@
-package io.ysb.imdb.booster.domain
+package io.ysb.imdb.booster.domain.rating
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.ysb.imdb.booster.domain.TitleId
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
 import io.ysb.imdb.booster.port.output.GetTitleRatingPort
 import io.ysb.imdb.booster.port.output.SetTitleRatingPort

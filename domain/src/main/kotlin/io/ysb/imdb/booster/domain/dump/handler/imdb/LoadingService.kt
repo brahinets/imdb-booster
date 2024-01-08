@@ -1,7 +1,6 @@
-package io.ysb.imdb.booster.domain
+package io.ysb.imdb.booster.domain.dump.handler.imdb
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ysb.imdb.booster.domain.dump.handler.imdb.TitleHandler
 import io.ysb.imdb.booster.port.input.LoadRatingUseCase
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.TitleType

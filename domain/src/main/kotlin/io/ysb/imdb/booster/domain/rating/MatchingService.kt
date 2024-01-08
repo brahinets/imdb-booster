@@ -1,4 +1,4 @@
-package io.ysb.imdb.booster.domain
+package io.ysb.imdb.booster.domain.rating
 
 import io.ysb.imdb.booster.port.input.MatchTitleUseCase
 import io.ysb.imdb.booster.port.input.MatchingTitle

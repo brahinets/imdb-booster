@@ -1,5 +1,6 @@
 package io.ysb.imdb.booster.domain
 
+import io.ysb.imdb.booster.domain.rating.RatingService
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach

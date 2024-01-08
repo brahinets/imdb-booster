@@ -1,4 +1,4 @@
-package io.ysb.imdb.booster.domain.loader
+package io.ysb.imdb.booster.domain.rating
 
 import io.ysb.imdb.booster.port.input.LoadingTitle
 

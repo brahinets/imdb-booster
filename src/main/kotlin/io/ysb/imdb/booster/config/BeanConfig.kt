@@ -1,13 +1,13 @@
 package io.ysb.imdb.booster.config
 
 import io.ysb.imdb.booster.domain.dump.handler.imdb.BatchLoadingService
-import io.ysb.imdb.booster.domain.LoadingService
-import io.ysb.imdb.booster.domain.MatchingService
-import io.ysb.imdb.booster.domain.RatingService
-import io.ysb.imdb.booster.domain.TitleService
+import io.ysb.imdb.booster.domain.dump.handler.imdb.LoadingService
+import io.ysb.imdb.booster.domain.rating.MatchingService
+import io.ysb.imdb.booster.domain.rating.RatingService
+import io.ysb.imdb.booster.domain.rating.TitleService
 import io.ysb.imdb.booster.domain.dump.handler.imdb.MovieHandler
 import io.ysb.imdb.booster.domain.dump.handler.imdb.TitleHandler
-import io.ysb.imdb.booster.domain.loader.MovieLoader
+import io.ysb.imdb.booster.domain.rating.MovieLoader
 import io.ysb.imdb.booster.filesystem.LoadLocalRatingsAdapter
 import io.ysb.imdb.booster.filesystem.LoadLocalVotesAdapter
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
