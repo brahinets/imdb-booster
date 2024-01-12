@@ -30,7 +30,7 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort, SearchTit
         val request = buildRequest(titleName)
 
         val response = doRequest(request)
-        return mapResults(response.d, titleName)
+        return Optional.ofNullable(mapResults(response.d, titleName).firstOrNull())
     }
 
     override fun searchTitleByLocalisedName(titleName: String): Optional<TitleSuggestion> {
@@ -38,7 +38,7 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort, SearchTit
             .header("X-Imdb-User-Country", "RU")
 
         val response = doRequest(request)
-        return mapResults(response.d, titleName)
+        return Optional.ofNullable(mapResults(response.d, titleName).firstOrNull())
     }
 
     private fun doRequest(header: WebClient.RequestHeadersSpec<*>) =
@@ -59,20 +59,16 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort, SearchTit
     private fun mapResults(
         autoSuggestItems: List<D>,
         titleName: String
-    ): Optional<TitleSuggestion> {
-        val result = autoSuggestItems.firstOrNull { it.title?.lowercase() == titleName.lowercase() }
-
-        if (result == null) {
-            return Optional.empty()
-        }
-
-        return Optional.of(
-            TitleSuggestion(
-                result.id,
-                result.title!!,
-                result.year,
-                result.s?.split(",")?.toSet()
-            )
-        )
+    ): List<TitleSuggestion> {
+        return autoSuggestItems
+            .filter { it.title?.lowercase() == titleName.lowercase() }
+            .map {
+                TitleSuggestion(
+                    it.id,
+                    it.title!!,
+                    it.year,
+                    it.s?.split(",")?.toSet()
+                )
+            }
     }
 }
