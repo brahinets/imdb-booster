@@ -1,8 +1,8 @@
 package io.ysb.imdb.booster
 
 import io.ysb.imdb.booster.port.output.LoadLocalVotesPort
-import io.ysb.imdb.booster.port.output.SearchTitleByLocalisedNamePort
-import io.ysb.imdb.booster.port.output.SearchTitleByNamePort
+import io.ysb.imdb.booster.port.output.SearchTitlePort
+import io.ysb.imdb.booster.port.output.TitleSearchCriteria
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import java.nio.file.Files
@@ -14,16 +14,18 @@ class BoosterApplication
 fun main(args: Array<String>) {
     val context = runApplication<BoosterApplication>(*args)
 
-    val search = context.getBean(SearchTitleByNamePort::class.java)
-    val searchLocalised = context.getBean(SearchTitleByLocalisedNamePort::class.java)
+    val search = context.getBean(SearchTitlePort::class.java)
     val loader = context.getBean(LoadLocalVotesPort::class.java)
 
     Files.newBufferedReader(Paths.get("./votes.csv")).use { votesDump ->
-        loader.loadLocalTitles(votesDump).forEach {entry ->
-            val title = if(entry.localisedName == entry.originalName)
-                searchLocalised.searchTitleByLocalisedName(entry.localisedName)
-             else
-                search.searchTitleByName(entry.originalName)
+        loader.loadLocalTitles(votesDump).forEach { entry ->
+            val title = search.searchTitle(
+                TitleSearchCriteria(
+                    entry.originalName,
+                    entry.localisedName,
+                    entry.year
+                )
+            )
 
             title.ifPresentOrElse(
                 { println("Imdb Movie: ${it.title} (${it.year}) found for ${entry.localisedName} (name matched ${entry.localisedName == it.title})") },

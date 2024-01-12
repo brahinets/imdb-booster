@@ -3,6 +3,8 @@ package io.ysb.imdb.booster.api.search
 import io.ysb.imdb.booster.domain.TitleId
 import io.ysb.imdb.booster.port.output.SearchTitleByLocalisedNamePort
 import io.ysb.imdb.booster.port.output.SearchTitleByNamePort
+import io.ysb.imdb.booster.port.output.SearchTitlePort
+import io.ysb.imdb.booster.port.output.TitleSearchCriteria
 import io.ysb.imdb.booster.port.output.TitleSuggestion
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
@@ -10,7 +12,19 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.util.*
 
 @Component
-class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitleByNamePort, SearchTitleByLocalisedNamePort {
+class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort, SearchTitleByNamePort,
+    SearchTitleByLocalisedNamePort {
+
+    override fun searchTitle(criteria: TitleSearchCriteria): Optional<TitleSuggestion> {
+        val suggestion: Optional<TitleSuggestion> =
+            if (criteria.originalName.lowercase() === criteria.localisedName.lowercase()) {
+                searchTitleByLocalisedName(criteria.localisedName)
+            } else {
+                searchTitleByName(criteria.originalName)
+            }
+
+        return suggestion.filter { it.year == criteria.year }
+    }
 
     override fun searchTitleByName(titleName: String): Optional<TitleSuggestion> {
         val request = buildRequest(titleName)
