@@ -1,8 +1,6 @@
 package io.ysb.imdb.booster.api.search
 
 import io.ysb.imdb.booster.domain.TitleId
-import io.ysb.imdb.booster.port.output.SearchTitleByLocalisedNamePort
-import io.ysb.imdb.booster.port.output.SearchTitleByNamePort
 import io.ysb.imdb.booster.port.output.SearchTitlePort
 import io.ysb.imdb.booster.port.output.TitleSearchCriteria
 import io.ysb.imdb.booster.port.output.TitleSuggestion
@@ -12,8 +10,7 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.util.*
 
 @Component
-class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort, SearchTitleByNamePort,
-    SearchTitleByLocalisedNamePort {
+class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort {
 
     override fun searchTitle(criteria: TitleSearchCriteria): Optional<TitleSuggestion> {
         val suggestion: Optional<TitleSuggestion> =
@@ -26,14 +23,14 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort, SearchTit
         return suggestion.filter { it.year == criteria.year }
     }
 
-    override fun searchTitleByName(titleName: String): Optional<TitleSuggestion> {
+    private fun searchTitleByName(titleName: String): Optional<TitleSuggestion> {
         val request = buildRequest(titleName)
 
         val response = doRequest(request)
         return Optional.ofNullable(mapResults(response.d, titleName).firstOrNull())
     }
 
-    override fun searchTitleByLocalisedName(titleName: String): Optional<TitleSuggestion> {
+    private fun searchTitleByLocalisedName(titleName: String): Optional<TitleSuggestion> {
         val request = buildRequest(titleName)
             .header("X-Imdb-User-Country", "RU")
 
