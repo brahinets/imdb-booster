@@ -16,14 +16,24 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort {
     private val logger = KotlinLogging.logger {}
 
     override fun searchTitle(criteria: TitleSearchCriteria): Optional<TitleSuggestion> {
-        val localTitle = criteria.originalName.lowercase() == criteria.localisedName.lowercase()
-        val suggestion: List<TitleSuggestion> =
-            if (localTitle) {
-                searchTitlesByLocalisedName(criteria)
-            } else {
-                searchTitlesByName(criteria)
-            }
+        val suggestions: List<TitleSuggestion> = searchTitlesByLocalisedName(criteria)
 
+        val bestLocalisedMatch = selectTheBestMatch(suggestions, criteria)
+        if (bestLocalisedMatch.isPresent) {
+            return bestLocalisedMatch
+        }
+
+        if (criteria.originalName.lowercase() != criteria.localisedName.lowercase()) {
+            return selectTheBestMatch(searchTitlesByName(criteria), criteria)
+        }
+
+        return Optional.empty()
+    }
+
+    private fun selectTheBestMatch(
+        suggestion: List<TitleSuggestion>,
+        criteria: TitleSearchCriteria
+    ): Optional<TitleSuggestion> {
         return if (suggestion.isEmpty()) {
             Optional.empty()
         } else if (suggestion.size > 1) {
