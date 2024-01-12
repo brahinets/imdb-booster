@@ -20,7 +20,7 @@ fun main(args: Array<String>) {
     val search = context.getBean(SearchTitlePort::class.java)
     val loader = context.getBean(LoadLocalVotesPort::class.java)
 
-    Files.newBufferedReader(Paths.get("./votes.csv")).use { votesDump ->
+    Files.newBufferedReader(Paths.get("./votes-all.csv")).use { votesDump ->
         loader.loadLocalTitles(votesDump).forEach { entry ->
             val title = search.searchTitle(
                 TitleSearchCriteria(
@@ -31,8 +31,8 @@ fun main(args: Array<String>) {
             )
 
             title.ifPresentOrElse(
-                { logger.info { "Imdb Movie: ${it.title} (${it.year}) found for ${entry.localisedName} (name matched ${entry.localisedName.lowercase() == it.title.lowercase()})" } },
-                { logger.info { "Imdb Movie not found for: ${entry.localisedName}" } }
+                { logger.info { "Imdb Title: ${it.title} (${it.year}) found for ${entry.localisedName} (name matched ${entry.localisedName.lowercase() == it.title.lowercase()})" } },
+                { logger.info { "Imdb Title not found for: ${entry.localisedName}" } }
             )
         }
     }

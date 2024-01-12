@@ -2,6 +2,7 @@ package io.ysb.imdb.booster.api.search
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ysb.imdb.booster.domain.TitleId
+import io.ysb.imdb.booster.port.input.TitleType
 import io.ysb.imdb.booster.port.output.SearchTitlePort
 import io.ysb.imdb.booster.port.output.TitleSearchCriteria
 import io.ysb.imdb.booster.port.output.TitleSuggestion
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.util.UriComponentsBuilder
 import java.util.*
+
+val CONFIDENT = listOf(TitleType.MOVIE, TitleType.TV_SERIES, TitleType.TV_MINI_SERIES, TitleType.TV_MOVIE)
 
 @Component
 class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort {
@@ -80,6 +83,7 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort {
     ): List<TitleSuggestion> {
         return autoSuggestItems
             .filter { it.title?.lowercase() == titleName.lowercase() }
+            .filter { TitleType.from(it.qid ?: "") in CONFIDENT }
             .map {
                 TitleSuggestion(
                     it.id,
