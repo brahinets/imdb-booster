@@ -1,25 +1,25 @@
 package io.ysb.imdb.booster.api.search
 
 import io.ysb.imdb.booster.domain.TitleId
-import io.ysb.imdb.booster.port.output.SearchMovieByLocalisedNamePort
-import io.ysb.imdb.booster.port.output.SearchMovieByNamePort
+import io.ysb.imdb.booster.port.output.SearchTitleByLocalisedNamePort
+import io.ysb.imdb.booster.port.output.SearchTitleByNamePort
 import io.ysb.imdb.booster.port.output.TitleSuggestion
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.util.UriComponentsBuilder
-import java.util.Optional
+import java.util.*
 
 @Component
-class SearchMovieByNameAdapter(val imdbClient: WebClient) : SearchMovieByNamePort, SearchMovieByLocalisedNamePort {
+class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitleByNamePort, SearchTitleByLocalisedNamePort {
 
-    override fun searchMovieByName(titleName: String): Optional<TitleSuggestion> {
+    override fun searchTitleByName(titleName: String): Optional<TitleSuggestion> {
         val request = buildRequest(titleName)
 
         val response = doRequest(request)
         return mapResults(response.d, titleName)
     }
 
-    override fun searchMovieByLocalisedName(titleName: String): Optional<TitleSuggestion> {
+    override fun searchTitleByLocalisedName(titleName: String): Optional<TitleSuggestion> {
         val request = buildRequest(titleName)
             .header("X-Imdb-User-Country", "RU")
 
@@ -46,7 +46,7 @@ class SearchMovieByNameAdapter(val imdbClient: WebClient) : SearchMovieByNamePor
         autoSuggestItems: List<D>,
         titleName: String
     ): Optional<TitleSuggestion> {
-        val result = autoSuggestItems.firstOrNull { it.title?.lowercase() == titleName.lowercase() && it.qid == "movie" }
+        val result = autoSuggestItems.firstOrNull { it.title?.lowercase() == titleName.lowercase() }
 
         if (result == null) {
             return Optional.empty()
