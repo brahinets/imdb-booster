@@ -1,5 +1,6 @@
 package io.ysb.imdb.booster
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ysb.imdb.booster.port.output.LoadLocalVotesPort
 import io.ysb.imdb.booster.port.output.SearchTitlePort
 import io.ysb.imdb.booster.port.output.TitleSearchCriteria
@@ -10,6 +11,8 @@ import java.nio.file.Paths
 
 @SpringBootApplication
 class BoosterApplication
+
+private val logger = KotlinLogging.logger {}
 
 fun main(args: Array<String>) {
     val context = runApplication<BoosterApplication>(*args)
@@ -28,8 +31,8 @@ fun main(args: Array<String>) {
             )
 
             title.ifPresentOrElse(
-                { println("Imdb Movie: ${it.title} (${it.year}) found for ${entry.localisedName} (name matched ${entry.localisedName == it.title})") },
-                { println("Imdb Movie not found for: ${entry.localisedName}") }
+                { logger.info { "Imdb Movie: ${it.title} (${it.year}) found for ${entry.localisedName} (name matched ${entry.localisedName == it.title})" } },
+                { logger.info { "Imdb Movie not found for: ${entry.localisedName}" } }
             )
         }
     }
