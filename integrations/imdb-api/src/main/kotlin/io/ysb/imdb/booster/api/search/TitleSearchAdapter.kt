@@ -51,7 +51,7 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort {
         val request = buildRequest(criteria.originalName, criteria.year)
 
         val response = doRequest(request)
-        return mapResults(response.d, criteria.originalName)
+        return mapResults(response.d, criteria.originalName, criteria.year)
     }
 
     private fun searchTitlesByLocalisedName(criteria: TitleSearchCriteria): List<TitleSuggestion> {
@@ -59,7 +59,7 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort {
             .header("X-Imdb-User-Country", "RU")
 
         val response = doRequest(request)
-        return mapResults(response.d, criteria.localisedName)
+        return mapResults(response.d, criteria.localisedName, criteria.year)
     }
 
     private fun doRequest(header: WebClient.RequestHeadersSpec<*>) =
@@ -79,10 +79,12 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort {
 
     private fun mapResults(
         autoSuggestItems: List<D>,
-        titleName: String
+        titleName: String,
+        year: Int
     ): List<TitleSuggestion> {
         return autoSuggestItems
             .filter { it.title?.lowercase() == titleName.lowercase() }
+            .filter { it.year in year - 1..year + 1 }
             .filter { TitleType.from(it.qid ?: "") in CONFIDENT }
             .map {
                 TitleSuggestion(
