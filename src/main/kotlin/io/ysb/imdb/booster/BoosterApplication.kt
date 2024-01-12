@@ -31,7 +31,7 @@ fun main(args: Array<String>) {
             )
 
             title.ifPresentOrElse(
-                { logger.info { "Imdb Movie: ${it.title} (${it.year}) found for ${entry.localisedName} (name matched ${entry.localisedName == it.title})" } },
+                { logger.info { "Imdb Movie: ${it.title} (${it.year}) found for ${entry.localisedName} (name matched ${entry.localisedName.lowercase() == it.title.lowercase()})" } },
                 { logger.info { "Imdb Movie not found for: ${entry.localisedName}" } }
             )
         }
