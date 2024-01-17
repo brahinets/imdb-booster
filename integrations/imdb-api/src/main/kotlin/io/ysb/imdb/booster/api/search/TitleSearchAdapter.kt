@@ -41,7 +41,14 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort {
             Optional.empty()
         } else if (suggestion.size > 1) {
             logger.warn { ("More than one title found for criteria $criteria") }
-            Optional.empty()
+            suggestion.filter { it.year == criteria.year }.let {
+                if (it.size == 1) {
+                    Optional.of(it.first())
+                } else {
+                    logger.warn { ("More than one title found for criteria $criteria") }
+                    Optional.empty()
+                }
+            }
         } else {
             Optional.of(suggestion.first())
         }
