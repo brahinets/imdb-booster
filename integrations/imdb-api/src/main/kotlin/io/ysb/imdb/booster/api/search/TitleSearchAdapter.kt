@@ -66,7 +66,7 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort {
             .header("X-Imdb-User-Country", "RU")
 
         val response = doRequest(request)
-        return mapResults(response.d, criteria.localisedName, criteria.year)
+        return mapResults(fixCyrillicHomoglyphs(response.d), criteria.localisedName, criteria.year)
     }
 
     private fun doRequest(header: WebClient.RequestHeadersSpec<*>) =
@@ -101,5 +101,21 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort {
                     it.s?.split(",")?.toSet()
                 )
             }
+    }
+
+    private fun fixCyrillicHomoglyphs(d: List<D>): List<D> {
+        return d.map {
+            it.copy(
+                title = fixCyrillicHomoglyphs(it.title ?: "")
+            )
+        }
+    }
+
+    private fun fixCyrillicHomoglyphs(title: String): String {
+        return title
+            .replace("a", "а", true)
+            .replace("e", "е", true)
+            .replace("o", "о", true)
+            .replace("i", "і", true)
     }
 }
