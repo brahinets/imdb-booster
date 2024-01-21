@@ -32,7 +32,7 @@ class KinoposhukBatchLoadingService(
 
             imdb.ifPresentOrElse(
                 {
-                    logger.info { "Mapped Kinoposhuk title '${kp.originalName}' (${kp.year}) to IMDB title '${it.title}' (${it.year})" }
+                    logger.info { "Mapped Kinoposhuk title '${kp.originalName}' (${kp.year}) to IMDB title ${it.id} '${it.title}' (${it.year})" }
 
                     val title = titleService.getTitle(it.id)
 
