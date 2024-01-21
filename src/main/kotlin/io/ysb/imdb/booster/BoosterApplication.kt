@@ -1,9 +1,6 @@
 package io.ysb.imdb.booster
 
-import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ysb.imdb.booster.port.output.LoadLocalVotesPort
-import io.ysb.imdb.booster.port.output.SearchTitlePort
-import io.ysb.imdb.booster.port.output.TitleSearchCriteria
+import io.ysb.imdb.booster.domain.dump.handler.kp.KinoposhukBatchLoadingService
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import java.nio.file.Files
@@ -12,28 +9,12 @@ import java.nio.file.Paths
 @SpringBootApplication
 class BoosterApplication
 
-private val logger = KotlinLogging.logger {}
-
 fun main(args: Array<String>) {
     val context = runApplication<BoosterApplication>(*args)
 
-    val search = context.getBean(SearchTitlePort::class.java)
-    val loader = context.getBean(LoadLocalVotesPort::class.java)
+    val loader = context.getBean(KinoposhukBatchLoadingService::class.java)
 
-    Files.newBufferedReader(Paths.get("./votes-all.csv")).use { votesDump ->
-        loader.loadLocalTitles(votesDump).forEach { entry ->
-            val title = search.searchTitle(
-                TitleSearchCriteria(
-                    entry.originalName,
-                    entry.localisedName,
-                    entry.year
-                )
-            )
-
-            title.ifPresentOrElse(
-                { logger.info { "Imdb Title: ${it.title} (${it.year}) found for ${entry.localisedName} (name matched ${entry.localisedName.lowercase() == it.title.lowercase()})" } },
-                { logger.info { "Imdb Title not found for: ${entry.localisedName}" } }
-            )
-        }
+    Files.newBufferedReader(Paths.get("./votes.csv")).use { votesDump ->
+        loader.batchLoadRating(votesDump)
     }
 }
