@@ -47,7 +47,7 @@ class KinoposhukBatchLoadingService(
                     )
 
                 },
-                { logger.info { "Cannot map Kinoposhuk title '${kp.localisedName}' (${kp.year}) to Imdb title" } }
+                { logger.warn { "Cannot map Kinoposhuk title '${kp.localisedName}' (${kp.year}) to Imdb title" } }
             )
         }
 
