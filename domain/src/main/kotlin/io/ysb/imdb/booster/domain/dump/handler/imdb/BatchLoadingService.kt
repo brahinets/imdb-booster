@@ -33,6 +33,6 @@ class BatchLoadingService(
             )
         }
 
-        logger.info { "Batch loading finished" }
+        logger.info { "Batch loading ok IMDB dump has been finished" }
     }
 }
