@@ -1,14 +1,14 @@
 package io.ysb.imdb.booster.config
 
 import io.ysb.imdb.booster.domain.dump.handler.imdb.BatchLoadingService
-import io.ysb.imdb.booster.domain.dump.handler.kp.KinoposhukBatchLoadingService
 import io.ysb.imdb.booster.domain.dump.handler.imdb.LoadingService
-import io.ysb.imdb.booster.domain.rating.MatchingService
-import io.ysb.imdb.booster.domain.rating.RatingService
-import io.ysb.imdb.booster.domain.rating.TitleService
 import io.ysb.imdb.booster.domain.dump.handler.imdb.MovieHandler
 import io.ysb.imdb.booster.domain.dump.handler.imdb.TitleHandler
+import io.ysb.imdb.booster.domain.dump.handler.kp.KinoposhukBatchLoadingService
+import io.ysb.imdb.booster.domain.rating.MatchingService
 import io.ysb.imdb.booster.domain.rating.MovieLoader
+import io.ysb.imdb.booster.domain.rating.RatingService
+import io.ysb.imdb.booster.domain.rating.TitleService
 import io.ysb.imdb.booster.filesystem.LoadLocalRatingsAdapter
 import io.ysb.imdb.booster.filesystem.LoadLocalVotesAdapter
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
@@ -97,10 +97,14 @@ class BeanConfig {
     @Bean
     fun kinoposhukBatchLoadingService(
         searchTitlePort: SearchTitlePort,
+        loadingService: LoadingService,
+        titleService: TitleService,
         loadLocalRatingsPort: LoadLocalVotesPort
     ): KinoposhukBatchLoadingService {
         return KinoposhukBatchLoadingService(
             searchTitlePort,
+            loadingService,
+            titleService,
             loadLocalRatingsPort
         )
     }

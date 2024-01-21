@@ -18,6 +18,7 @@ class TitleService(
 
         return Title(
             info.id,
+            info.type,
             info.title,
             info.year,
             rating

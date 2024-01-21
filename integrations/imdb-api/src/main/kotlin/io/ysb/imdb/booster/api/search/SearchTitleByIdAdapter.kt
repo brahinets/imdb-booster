@@ -1,6 +1,7 @@
 package io.ysb.imdb.booster.api.search
 
 import io.ysb.imdb.booster.domain.TitleId
+import io.ysb.imdb.booster.port.input.TitleType
 import io.ysb.imdb.booster.port.output.SearchTitleByIdPort
 import io.ysb.imdb.booster.port.output.TitleSuggestion
 import org.springframework.stereotype.Component
@@ -20,6 +21,7 @@ class SearchTitleByIdAdapter(val imdbClient: WebClient) : SearchTitleByIdPort {
         return TitleSuggestion(
             result.id,
             result.title!!,
+            TitleType.from(result.qid ?: ""),
             result.year,
             result.s?.split(",")?.toSet()
         )

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 
 class MovieLoaderTest {
     private val movies: MutableMap<TitleId, Title> = mutableMapOf(
-        Pair("tt12345678", Title("tt12345678", "Movie", 2020, 7)),
+        Pair("tt12345678", Title("tt12345678", TitleType.MOVIE, "Movie", 2020, 7)),
     )
 
     @Test

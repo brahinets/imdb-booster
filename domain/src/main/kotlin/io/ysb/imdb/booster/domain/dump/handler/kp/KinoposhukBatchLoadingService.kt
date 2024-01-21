@@ -1,7 +1,10 @@
 package io.ysb.imdb.booster.domain.dump.handler.kp
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.ysb.imdb.booster.domain.dump.handler.imdb.LoadingService
+import io.ysb.imdb.booster.domain.rating.TitleService
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
+import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.output.KpLocalTitle
 import io.ysb.imdb.booster.port.output.LoadLocalVotesPort
 import io.ysb.imdb.booster.port.output.SearchTitlePort
@@ -10,6 +13,8 @@ import java.io.Reader
 
 class KinoposhukBatchLoadingService(
     private val searchTitlePort: SearchTitlePort,
+    private val loadingService: LoadingService,
+    private val titleService: TitleService,
     private val loadLocalRatingsPort: LoadLocalVotesPort
 ) : BatchLoadRatingUseCase {
 
@@ -26,7 +31,22 @@ class KinoposhukBatchLoadingService(
             val imdb = mapToImdbTitle(kp)
 
             imdb.ifPresentOrElse(
-                { logger.info { "Mapped Kinoposhuk title '${kp.originalName}' (${kp.year}) to IMDB title '${it.title}' (${it.year})" } },
+                {
+                    logger.info { "Mapped Kinoposhuk title '${kp.originalName}' (${kp.year}) to IMDB title '${it.title}' (${it.year})" }
+
+                    val title = titleService.getTitle(it.id)
+
+                    loadingService.loadRating(
+                        LoadingTitle(
+                            title.id,
+                            title.title,
+                            title.year,
+                            kp.myRating,
+                            title.type
+                        )
+                    )
+
+                },
                 { logger.info { "Cannot map Kinoposhuk title '${kp.localisedName}' (${kp.year}) to Imdb title" } }
             )
         }

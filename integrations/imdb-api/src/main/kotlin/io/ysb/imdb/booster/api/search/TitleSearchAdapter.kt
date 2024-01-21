@@ -97,6 +97,7 @@ class TitleSearchAdapter(val imdbClient: WebClient) : SearchTitlePort {
                 TitleSuggestion(
                     it.id,
                     it.title!!,
+                    TitleType.from(it.qid ?: ""),
                     it.year,
                     it.s?.split(",")?.toSet()
                 )
