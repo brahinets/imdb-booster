@@ -50,7 +50,7 @@ class KinoposhukBatchLoadingService(
             )
         }
 
-        logger.info { "Batch loading ok Kinoposhuk dump has been finished" }
+        logger.info { "Batch loading of Kinoposhuk dump has been finished" }
     }
 
     private fun mapToImdbTitle(title: KpLocalTitle) = searchTitlePort.searchTitle(

@@ -39,6 +39,6 @@ class NonConfidentImdbBatchLoadingService(
             }
         }
 
-        logger.info { "Batch loading ok IMDB dump has been finished" }
+        logger.info { "Batch loading of IMDB dump has been finished" }
     }
 }
