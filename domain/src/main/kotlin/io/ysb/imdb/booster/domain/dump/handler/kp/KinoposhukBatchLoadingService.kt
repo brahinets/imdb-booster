@@ -41,8 +41,7 @@ class KinoposhukBatchLoadingService(
                             title.id,
                             title.title,
                             title.year,
-                            kp.myRating,
-                            title.type
+                            kp.myRating
                         )
                     )
 

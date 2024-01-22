@@ -33,8 +33,7 @@ class ImdbBatchLoadingService(
                         id = it.id,
                         name = it.name,
                         year = it.year,
-                        myRating = it.myRating,
-                        type = it.type
+                        myRating = it.myRating
                     )
                 )
             }

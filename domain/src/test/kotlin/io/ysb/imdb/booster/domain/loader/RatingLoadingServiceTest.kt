@@ -20,7 +20,7 @@ class RatingLoadingServiceTest {
             { _, _ -> throw IllegalStateException("Should not be called") }
         )
 
-        val title = LoadingTitle("tt12345678", "Movie", 2021, 10, TitleType.MOVIE)
+        val title = LoadingTitle("tt12345678", "Movie", 2021, 10)
         loader.loadRating(title)
 
         assertEquals(7, titles["tt12345678"]!!.myRating)
@@ -33,7 +33,7 @@ class RatingLoadingServiceTest {
             { _, _ -> throw IllegalStateException("Should not be called") }
         )
 
-        val title = LoadingTitle("tt12345678", "The Movie", 2020, 10, TitleType.MOVIE)
+        val title = LoadingTitle("tt12345678", "The Movie", 2020, 10)
         loader.loadRating(title)
 
         assertEquals(7, titles["tt12345678"]!!.myRating)
@@ -49,7 +49,7 @@ class RatingLoadingServiceTest {
             }
         )
 
-        val title = LoadingTitle("tt12345678", "Movie", 2020, 10, TitleType.MOVIE)
+        val title = LoadingTitle("tt12345678", "Movie", 2020, 10)
         loader.loadRating(title)
 
         assertEquals(10, titles["tt12345678"]!!.myRating)
