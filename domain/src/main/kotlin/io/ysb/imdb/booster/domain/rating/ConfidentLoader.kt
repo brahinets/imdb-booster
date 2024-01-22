@@ -4,9 +4,8 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ysb.imdb.booster.port.input.GetTitleUseCase
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
-import io.ysb.imdb.booster.port.input.TitleType
 
-class MovieLoader(
+class ConfidentLoader(
     private val getTitleUseCase: GetTitleUseCase,
     private val rateTitleUseCase: RateTitleUseCase
 ) : TitleLoader {
@@ -14,11 +13,6 @@ class MovieLoader(
     private val logger = KotlinLogging.logger {}
 
     override fun loadTitle(title: LoadingTitle) {
-        if (title.type != TitleType.MOVIE) {
-            logger.warn { "Skip loading rating for ${title.id} due to it is not supported by this loader (movie)" }
-            return
-        }
-
         logger.info { "Verifying correct title is rated by comparing local and remote data for ${title.id}" }
         val matched: Boolean = matchLocalAndRemote(title)
 

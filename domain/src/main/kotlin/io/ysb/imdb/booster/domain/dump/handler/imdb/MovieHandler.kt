@@ -1,12 +1,12 @@
 package io.ysb.imdb.booster.domain.dump.handler.imdb
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ysb.imdb.booster.domain.rating.MovieLoader
+import io.ysb.imdb.booster.domain.rating.TitleLoader
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.TitleType
 
 class MovieHandler(
-    private val movieLoader: MovieLoader
+    private val titleLoader: TitleLoader
 ) : TitleHandler {
 
     private val logger = KotlinLogging.logger {}
@@ -17,6 +17,6 @@ class MovieHandler(
             return
         }
 
-        movieLoader.loadTitle(title)
+        titleLoader.loadTitle(title)
     }
 }

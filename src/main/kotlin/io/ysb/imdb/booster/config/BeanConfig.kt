@@ -6,8 +6,9 @@ import io.ysb.imdb.booster.domain.dump.handler.imdb.MovieHandler
 import io.ysb.imdb.booster.domain.dump.handler.imdb.TitleHandler
 import io.ysb.imdb.booster.domain.dump.handler.kp.KinoposhukBatchLoadingService
 import io.ysb.imdb.booster.domain.rating.MatchingService
-import io.ysb.imdb.booster.domain.rating.MovieLoader
+import io.ysb.imdb.booster.domain.rating.ConfidentLoader
 import io.ysb.imdb.booster.domain.rating.RatingService
+import io.ysb.imdb.booster.domain.rating.TitleLoader
 import io.ysb.imdb.booster.domain.rating.TitleService
 import io.ysb.imdb.booster.filesystem.LoadLocalRatingsAdapter
 import io.ysb.imdb.booster.filesystem.LoadLocalVotesAdapter
@@ -57,17 +58,17 @@ class BeanConfig {
 
     @Bean
     fun movieHandler(
-        movieLoader: MovieLoader
+        confidentLoader: TitleLoader
     ): MovieHandler {
-        return MovieHandler(movieLoader)
+        return MovieHandler(confidentLoader)
     }
 
     @Bean
-    fun movieLoader(
+    fun confidentLoader(
         getTitleUseCase: GetTitleUseCase,
         rateTitleUseCase: RateTitleUseCase
-    ): MovieLoader {
-        return MovieLoader(
+    ): ConfidentLoader {
+        return ConfidentLoader(
             getTitleUseCase,
             rateTitleUseCase
         )
