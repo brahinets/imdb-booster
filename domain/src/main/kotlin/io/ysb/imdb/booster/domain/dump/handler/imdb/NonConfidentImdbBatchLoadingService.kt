@@ -8,9 +8,9 @@ import io.ysb.imdb.booster.port.input.TitleType
 import io.ysb.imdb.booster.port.output.ReadLocalRatingsPort
 import java.io.Reader
 
-private val SUPPORTED_TITLES: Array<TitleType> = arrayOf(TitleType.MOVIE)
+private val CONFIDENT_TITLES: Array<TitleType> = arrayOf(TitleType.MOVIE)
 
-class ImdbBatchLoadingService(
+class NonConfidentImdbBatchLoadingService(
     private val titleLoadingUseCase: TitleLoadingUseCase,
     private val readLocalRatingsPort: ReadLocalRatingsPort
 ) : BatchLoadRatingUseCase {
@@ -26,7 +26,7 @@ class ImdbBatchLoadingService(
             logger.info { "Loading title ${it.id} named '${it.name}'. (${index + 1} of ${localTitles.size})" }
 
             if (it.type !== TitleType.MOVIE) {
-                logger.warn { "Skip loading rating '${it.myRating}' for ${it.id} '${it.name}' due to it is not supported type: ${it.type}. Only ${SUPPORTED_TITLES.contentToString()} are supported" }
+                logger.warn { "Skip loading rating '${it.myRating}' for ${it.id} '${it.name}' due to it is not supported type: ${it.type}. Only ${CONFIDENT_TITLES.contentToString()} are supported" }
             } else {
                 titleLoadingUseCase.loadRating(
                     LoadingTitle(

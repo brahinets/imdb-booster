@@ -1,6 +1,6 @@
 package io.ysb.imdb.booster.config
 
-import io.ysb.imdb.booster.domain.dump.handler.imdb.ImdbBatchLoadingService
+import io.ysb.imdb.booster.domain.dump.handler.imdb.NonConfidentImdbBatchLoadingService
 import io.ysb.imdb.booster.domain.dump.handler.kp.KinoposhukBatchLoadingService
 import io.ysb.imdb.booster.domain.rating.MatchingService
 import io.ysb.imdb.booster.domain.rating.TitleLoadingService
@@ -67,11 +67,11 @@ class BeanConfig {
     }
 
     @Bean
-    fun batchLoadRatingUseCase(
+    fun nonConfidentImdbBatchLoadingService(
         titleLoadingUseCase: TitleLoadingUseCase,
         readLocalRatingsPort: ReadLocalRatingsPort
     ): BatchLoadRatingUseCase {
-        return ImdbBatchLoadingService(
+        return NonConfidentImdbBatchLoadingService(
             titleLoadingUseCase,
             readLocalRatingsPort
         )
