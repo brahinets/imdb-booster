@@ -46,7 +46,7 @@ class BeanConfig {
     }
 
     @Bean
-    fun ratingLoadingService(
+    fun titleLoadingService(
         getTitleInfoUseCase: GetTitleInfoUseCase,
         rateTitleUseCase: RateTitleUseCase
     ): TitleLoadingService {
