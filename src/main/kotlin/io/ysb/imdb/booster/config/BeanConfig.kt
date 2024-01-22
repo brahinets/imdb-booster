@@ -1,14 +1,10 @@
 package io.ysb.imdb.booster.config
 
-import io.ysb.imdb.booster.domain.dump.handler.imdb.BatchLoadingService
-import io.ysb.imdb.booster.domain.dump.handler.imdb.LoadingService
-import io.ysb.imdb.booster.domain.dump.handler.imdb.MovieHandler
-import io.ysb.imdb.booster.domain.dump.handler.imdb.TitleHandler
+import io.ysb.imdb.booster.domain.dump.handler.imdb.ImdbBatchLoadingService
 import io.ysb.imdb.booster.domain.dump.handler.kp.KinoposhukBatchLoadingService
 import io.ysb.imdb.booster.domain.rating.MatchingService
-import io.ysb.imdb.booster.domain.rating.ConfidentLoader
+import io.ysb.imdb.booster.domain.rating.RatingLoadingService
 import io.ysb.imdb.booster.domain.rating.RatingService
-import io.ysb.imdb.booster.domain.rating.TitleLoader
 import io.ysb.imdb.booster.domain.rating.TitleService
 import io.ysb.imdb.booster.filesystem.LoadLocalRatingsAdapter
 import io.ysb.imdb.booster.filesystem.LoadLocalVotesAdapter
@@ -50,25 +46,11 @@ class BeanConfig {
     }
 
     @Bean
-    fun loadingService(
-        movieHandler: TitleHandler,
-    ): LoadingService {
-        return LoadingService(movieHandler)
-    }
-
-    @Bean
-    fun movieHandler(
-        confidentLoader: TitleLoader
-    ): MovieHandler {
-        return MovieHandler(confidentLoader)
-    }
-
-    @Bean
-    fun confidentLoader(
+    fun ratingLoadingService(
         getTitleUseCase: GetTitleUseCase,
         rateTitleUseCase: RateTitleUseCase
-    ): ConfidentLoader {
-        return ConfidentLoader(
+    ): RatingLoadingService {
+        return RatingLoadingService(
             getTitleUseCase,
             rateTitleUseCase
         )
@@ -89,7 +71,7 @@ class BeanConfig {
         loadRatingUseCase: LoadRatingUseCase,
         loadLocalRatingsPort: LoadLocalRatingsPort
     ): BatchLoadRatingUseCase {
-        return BatchLoadingService(
+        return ImdbBatchLoadingService(
             loadRatingUseCase,
             loadLocalRatingsPort
         )
@@ -98,7 +80,7 @@ class BeanConfig {
     @Bean
     fun kinoposhukBatchLoadingService(
         searchTitlePort: SearchTitlePort,
-        loadingService: LoadingService,
+        loadingService: LoadRatingUseCase,
         titleService: TitleService,
         loadLocalRatingsPort: LoadLocalVotesPort
     ): KinoposhukBatchLoadingService {

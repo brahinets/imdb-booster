@@ -2,17 +2,18 @@ package io.ysb.imdb.booster.domain.rating
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ysb.imdb.booster.port.input.GetTitleUseCase
+import io.ysb.imdb.booster.port.input.LoadRatingUseCase
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
 
-class ConfidentLoader(
+class RatingLoadingService(
     private val getTitleUseCase: GetTitleUseCase,
     private val rateTitleUseCase: RateTitleUseCase
-) : TitleLoader {
+) : LoadRatingUseCase {
 
     private val logger = KotlinLogging.logger {}
 
-    override fun loadTitle(title: LoadingTitle) {
+    override fun loadRating(title: LoadingTitle) {
         logger.info { "Verifying correct title is rated by comparing local and remote data for ${title.id}" }
         val matched: Boolean = matchLocalAndRemote(title)
 

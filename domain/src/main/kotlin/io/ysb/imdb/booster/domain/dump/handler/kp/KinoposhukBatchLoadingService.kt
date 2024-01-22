@@ -1,9 +1,9 @@
 package io.ysb.imdb.booster.domain.dump.handler.kp
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ysb.imdb.booster.domain.dump.handler.imdb.LoadingService
 import io.ysb.imdb.booster.domain.rating.TitleService
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
+import io.ysb.imdb.booster.port.input.LoadRatingUseCase
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.output.KpLocalTitle
 import io.ysb.imdb.booster.port.output.LoadLocalVotesPort
@@ -13,7 +13,7 @@ import java.io.Reader
 
 class KinoposhukBatchLoadingService(
     private val searchTitlePort: SearchTitlePort,
-    private val loadingService: LoadingService,
+    private val loadRatingUseCase: LoadRatingUseCase,
     private val titleService: TitleService,
     private val loadLocalRatingsPort: LoadLocalVotesPort
 ) : BatchLoadRatingUseCase {
@@ -36,7 +36,7 @@ class KinoposhukBatchLoadingService(
 
                     val title = titleService.getTitle(it.id)
 
-                    loadingService.loadRating(
+                    loadRatingUseCase.loadRating(
                         LoadingTitle(
                             title.id,
                             title.title,
