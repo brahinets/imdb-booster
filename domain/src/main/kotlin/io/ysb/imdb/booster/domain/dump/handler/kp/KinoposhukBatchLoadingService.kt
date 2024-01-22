@@ -1,7 +1,7 @@
 package io.ysb.imdb.booster.domain.dump.handler.kp
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ysb.imdb.booster.domain.rating.TitleService
+import io.ysb.imdb.booster.domain.rating.TitleInfoService
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
 import io.ysb.imdb.booster.port.input.TitleLoadingUseCase
 import io.ysb.imdb.booster.port.input.LoadingTitle
@@ -14,7 +14,7 @@ import java.io.Reader
 class KinoposhukBatchLoadingService(
     private val searchTitlePort: SearchTitlePort,
     private val titleLoadingUseCase: TitleLoadingUseCase,
-    private val titleService: TitleService,
+    private val titleInfoService: TitleInfoService,
     private val readLocalRatingsPort: ReadLocalVotesPort
 ) : BatchLoadRatingUseCase {
 
@@ -34,7 +34,7 @@ class KinoposhukBatchLoadingService(
                 {
                     logger.info { "Mapped Kinoposhuk title '${kp.originalName}' (${kp.year}) to IMDB title ${it.id} '${it.title}' (${it.year})" }
 
-                    val title = titleService.getTitle(it.id)
+                    val title = titleInfoService.getTitle(it.id)
 
                     titleLoadingUseCase.loadRating(
                         LoadingTitle(

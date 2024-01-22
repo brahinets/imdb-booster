@@ -1,13 +1,13 @@
 package io.ysb.imdb.booster.domain.rating
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ysb.imdb.booster.port.input.GetTitleUseCase
+import io.ysb.imdb.booster.port.input.GetTitleInfoUseCase
 import io.ysb.imdb.booster.port.input.TitleLoadingUseCase
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
 
 class TitleLoadingService(
-    private val getTitleUseCase: GetTitleUseCase,
+    private val getTitleInfoUseCase: GetTitleInfoUseCase,
     private val rateTitleUseCase: RateTitleUseCase
 ) : TitleLoadingUseCase {
 
@@ -26,7 +26,7 @@ class TitleLoadingService(
     }
 
     private fun matchLocalAndRemote(title: LoadingTitle): Boolean {
-        val imdbTitle = getTitleUseCase.getTitle(title.id)
+        val imdbTitle = getTitleInfoUseCase.getTitle(title.id)
 
         if (title.name != imdbTitle.title) {
             logger.warn { "Skip loading rating for ${title.id} due to different names. Local '${title.name}' remote '${imdbTitle.title}'" }

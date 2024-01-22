@@ -5,11 +5,11 @@ import io.ysb.imdb.booster.domain.dump.handler.kp.KinoposhukBatchLoadingService
 import io.ysb.imdb.booster.domain.rating.MatchingService
 import io.ysb.imdb.booster.domain.rating.TitleLoadingService
 import io.ysb.imdb.booster.domain.rating.RatingService
-import io.ysb.imdb.booster.domain.rating.TitleService
+import io.ysb.imdb.booster.domain.rating.TitleInfoService
 import io.ysb.imdb.booster.filesystem.ReadLocalRatingsAdapter
 import io.ysb.imdb.booster.filesystem.ReadLocalVotesAdapter
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
-import io.ysb.imdb.booster.port.input.GetTitleUseCase
+import io.ysb.imdb.booster.port.input.GetTitleInfoUseCase
 import io.ysb.imdb.booster.port.input.TitleLoadingUseCase
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
 import io.ysb.imdb.booster.port.output.GetTitleRatingPort
@@ -25,11 +25,11 @@ import org.springframework.context.annotation.Configuration
 class BeanConfig {
 
     @Bean
-    fun titleService(
+    fun titleInfoService(
         getTitleRatingPort: GetTitleRatingPort,
         searchTitleByIdPort: SearchTitleByIdPort
-    ): TitleService {
-        return TitleService(getTitleRatingPort, searchTitleByIdPort)
+    ): TitleInfoService {
+        return TitleInfoService(getTitleRatingPort, searchTitleByIdPort)
     }
 
     @Bean
@@ -47,11 +47,11 @@ class BeanConfig {
 
     @Bean
     fun ratingLoadingService(
-        getTitleUseCase: GetTitleUseCase,
+        getTitleInfoUseCase: GetTitleInfoUseCase,
         rateTitleUseCase: RateTitleUseCase
     ): TitleLoadingService {
         return TitleLoadingService(
-            getTitleUseCase,
+            getTitleInfoUseCase,
             rateTitleUseCase
         )
     }
@@ -81,13 +81,13 @@ class BeanConfig {
     fun kinoposhukBatchLoadingService(
         searchTitlePort: SearchTitlePort,
         loadingService: TitleLoadingUseCase,
-        titleService: TitleService,
+        titleInfoService: TitleInfoService,
         readLocalRatingsPort: ReadLocalVotesPort
     ): KinoposhukBatchLoadingService {
         return KinoposhukBatchLoadingService(
             searchTitlePort,
             loadingService,
-            titleService,
+            titleInfoService,
             readLocalRatingsPort
         )
     }
