@@ -3,30 +3,30 @@ package io.ysb.imdb.booster.domain.dump.handler.kp
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ysb.imdb.booster.domain.rating.TitleService
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
-import io.ysb.imdb.booster.port.input.LoadRatingUseCase
+import io.ysb.imdb.booster.port.input.TitleLoadingUseCase
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.output.KpLocalTitle
-import io.ysb.imdb.booster.port.output.LoadLocalVotesPort
+import io.ysb.imdb.booster.port.output.ReadLocalVotesPort
 import io.ysb.imdb.booster.port.output.SearchTitlePort
 import io.ysb.imdb.booster.port.output.TitleSearchCriteria
 import java.io.Reader
 
 class KinoposhukBatchLoadingService(
     private val searchTitlePort: SearchTitlePort,
-    private val loadRatingUseCase: LoadRatingUseCase,
+    private val titleLoadingUseCase: TitleLoadingUseCase,
     private val titleService: TitleService,
-    private val loadLocalRatingsPort: LoadLocalVotesPort
+    private val readLocalRatingsPort: ReadLocalVotesPort
 ) : BatchLoadRatingUseCase {
 
     private val logger = KotlinLogging.logger {}
 
     override fun batchLoadRating(reader: Reader) {
-        val loadLocalTitles = loadLocalRatingsPort.loadLocalTitles(reader)
+        val localTitles = readLocalRatingsPort.readLocalTitles(reader)
 
-        logger.info { "Found ${loadLocalTitles.size} Kinoposhuk titles" }
+        logger.info { "Found ${localTitles.size} Kinoposhuk titles" }
 
-        loadLocalTitles.forEachIndexed { index, kp ->
-            logger.info { "Loading title '${kp.localisedName}' (aka '${kp.originalName}'). (${index + 1} of ${loadLocalTitles.size})" }
+        localTitles.forEachIndexed { index, kp ->
+            logger.info { "Loading title '${kp.localisedName}' (aka '${kp.originalName}'). (${index + 1} of ${localTitles.size})" }
 
             val imdb = mapToImdbTitle(kp)
 
@@ -36,7 +36,7 @@ class KinoposhukBatchLoadingService(
 
                     val title = titleService.getTitle(it.id)
 
-                    loadRatingUseCase.loadRating(
+                    titleLoadingUseCase.loadRating(
                         LoadingTitle(
                             title.id,
                             title.title,

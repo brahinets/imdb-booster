@@ -6,9 +6,9 @@ import io.ysb.imdb.booster.port.input.TitleType
 import io.ysb.imdb.booster.port.output.ImdbLocalTitle
 import java.io.Reader
 
-class LoadLocalRatingsAdapter : io.ysb.imdb.booster.port.output.LoadLocalRatingsPort {
+class ReadLocalRatingsAdapter : io.ysb.imdb.booster.port.output.ReadLocalRatingsPort {
 
-    override fun loadLocalTitles(reader: Reader): List<ImdbLocalTitle> {
+    override fun readLocalTitles(reader: Reader): List<ImdbLocalTitle> {
         try {
             val records = CsvToBeanBuilder<ImdbRatingsExportModel>(reader)
                 .withType(ImdbRatingsExportModel::class.java)

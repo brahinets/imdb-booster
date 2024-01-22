@@ -2,33 +2,33 @@ package io.ysb.imdb.booster.domain.dump.handler.imdb
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
-import io.ysb.imdb.booster.port.input.LoadRatingUseCase
 import io.ysb.imdb.booster.port.input.LoadingTitle
+import io.ysb.imdb.booster.port.input.TitleLoadingUseCase
 import io.ysb.imdb.booster.port.input.TitleType
-import io.ysb.imdb.booster.port.output.LoadLocalRatingsPort
+import io.ysb.imdb.booster.port.output.ReadLocalRatingsPort
 import java.io.Reader
 
 private val SUPPORTED_TITLES: Array<TitleType> = arrayOf(TitleType.MOVIE)
 
 class ImdbBatchLoadingService(
-    private val loadRatingUseCase: LoadRatingUseCase,
-    private val loadLocalRatingsPort: LoadLocalRatingsPort
+    private val titleLoadingUseCase: TitleLoadingUseCase,
+    private val readLocalRatingsPort: ReadLocalRatingsPort
 ) : BatchLoadRatingUseCase {
 
     private val logger = KotlinLogging.logger {}
 
     override fun batchLoadRating(reader: Reader) {
-        val loadLocalTitles = loadLocalRatingsPort.loadLocalTitles(reader)
+        val localTitles = readLocalRatingsPort.readLocalTitles(reader)
 
-        logger.info { "Found ${loadLocalTitles.size} titles" }
+        logger.info { "Found ${localTitles.size} titles" }
 
-        loadLocalTitles.forEachIndexed { index, it ->
-            logger.info { "Loading title ${it.id} named '${it.name}'. (${index + 1} of ${loadLocalTitles.size})" }
+        localTitles.forEachIndexed { index, it ->
+            logger.info { "Loading title ${it.id} named '${it.name}'. (${index + 1} of ${localTitles.size})" }
 
             if (it.type !== TitleType.MOVIE) {
                 logger.warn { "Skip loading rating '${it.myRating}' for ${it.id} '${it.name}' due to it is not supported type: ${it.type}. Only ${SUPPORTED_TITLES.contentToString()} are supported" }
             } else {
-                loadRatingUseCase.loadRating(
+                titleLoadingUseCase.loadRating(
                     LoadingTitle(
                         id = it.id,
                         name = it.name,

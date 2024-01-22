@@ -1,21 +1,21 @@
 package io.ysb.imdb.booster.domain.loader
 
 import io.ysb.imdb.booster.domain.TitleId
-import io.ysb.imdb.booster.domain.rating.RatingLoadingService
+import io.ysb.imdb.booster.domain.rating.TitleLoadingService
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.Title
 import io.ysb.imdb.booster.port.input.TitleType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class RatingLoadingServiceTest {
+class TitleLoadingServiceTest {
     private val titles: MutableMap<TitleId, Title> = mutableMapOf(
         Pair("tt12345678", Title("tt12345678", TitleType.MOVIE, "Movie", 2020, 7)),
     )
 
     @Test
     fun `should not rate title with non-matched year`() {
-        val loader = RatingLoadingService(
+        val loader = TitleLoadingService(
             { titleId -> titles[titleId]!! },
             { _, _ -> throw IllegalStateException("Should not be called") }
         )
@@ -28,7 +28,7 @@ class RatingLoadingServiceTest {
 
     @Test
     fun `should not rate title with non-matched name`() {
-        val loader = RatingLoadingService(
+        val loader = TitleLoadingService(
             { titleId -> titles[titleId]!! },
             { _, _ -> throw IllegalStateException("Should not be called") }
         )
@@ -41,7 +41,7 @@ class RatingLoadingServiceTest {
 
     @Test
     fun `should rate matched title`() {
-        val loader = RatingLoadingService(
+        val loader = TitleLoadingService(
             { titleId -> titles[titleId]!! },
             { titleId, rating ->
                 val title = titles[titleId]!!.copy(myRating = rating)

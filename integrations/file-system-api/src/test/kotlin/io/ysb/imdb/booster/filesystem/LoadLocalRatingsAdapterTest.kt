@@ -12,16 +12,16 @@ import java.io.StringReader
 
 class LoadLocalRatingsAdapterTest {
 
-    private lateinit var loadLocalRatingsAdapter: LoadLocalRatingsAdapter
+    private lateinit var readLocalRatingsAdapter: ReadLocalRatingsAdapter
 
     @BeforeEach
     fun setUp() {
-        loadLocalRatingsAdapter = LoadLocalRatingsAdapter()
+        readLocalRatingsAdapter = ReadLocalRatingsAdapter()
     }
 
     @Test
     fun loadFullTitle() {
-        val loadLocalTitles = loadLocalRatingsAdapter.loadLocalTitles(
+        val readLocalTitles = readLocalRatingsAdapter.readLocalTitles(
             StringReader(
                 """
                     Const;Your Rating;Date Rated;Title;URL;Title Type;IMDb Rating;Runtime (mins);Year;Genres;Num Votes;Release Date;Directors
@@ -31,14 +31,14 @@ class LoadLocalRatingsAdapterTest {
         )
 
         assertEquals(
-            listOf(ImdbLocalTitle("Ultra", "tt0100835", 9, TitleType.MOVIE, 1991, setOf("Drama", "Sport"))), loadLocalTitles
+            listOf(ImdbLocalTitle("Ultra", "tt0100835", 9, TitleType.MOVIE, 1991, setOf("Drama", "Sport"))), readLocalTitles
         )
     }
 
 
     @Test
     fun loadTitleWithMissingNonRequiredFields() {
-        val loadLocalTitles = loadLocalRatingsAdapter.loadLocalTitles(
+        val readLocalTitles = readLocalRatingsAdapter.readLocalTitles(
             StringReader(
                 """
                     Const;Your Rating;Date Rated;Title;URL;Title Type;IMDb Rating;Runtime (mins);Year;Genres;Num Votes;Release Date;Directors
@@ -49,7 +49,7 @@ class LoadLocalRatingsAdapterTest {
 
         assertEquals(
             listOf(ImdbLocalTitle("Ultra", "tt0100835", 9, TitleType.MOVIE ,1991, setOf("Drama", "Sport"))),
-            loadLocalTitles
+            readLocalTitles
         )
     }
 
@@ -67,7 +67,7 @@ class LoadLocalRatingsAdapterTest {
         val error = assertThrows<IllegalArgumentException> {
             val header =
                 "Const;Your Rating;Date Rated;Title;URL;Title Type;IMDb Rating;Runtime (mins);Year;Genres;Num Votes;Release Date;Directors"
-            loadLocalRatingsAdapter.loadLocalTitles(
+            readLocalRatingsAdapter.readLocalTitles(
                 StringReader(header + "\n" + limitedTitle)
             )
         }

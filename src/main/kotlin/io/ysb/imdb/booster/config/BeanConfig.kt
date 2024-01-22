@@ -3,18 +3,18 @@ package io.ysb.imdb.booster.config
 import io.ysb.imdb.booster.domain.dump.handler.imdb.ImdbBatchLoadingService
 import io.ysb.imdb.booster.domain.dump.handler.kp.KinoposhukBatchLoadingService
 import io.ysb.imdb.booster.domain.rating.MatchingService
-import io.ysb.imdb.booster.domain.rating.RatingLoadingService
+import io.ysb.imdb.booster.domain.rating.TitleLoadingService
 import io.ysb.imdb.booster.domain.rating.RatingService
 import io.ysb.imdb.booster.domain.rating.TitleService
-import io.ysb.imdb.booster.filesystem.LoadLocalRatingsAdapter
-import io.ysb.imdb.booster.filesystem.LoadLocalVotesAdapter
+import io.ysb.imdb.booster.filesystem.ReadLocalRatingsAdapter
+import io.ysb.imdb.booster.filesystem.ReadLocalVotesAdapter
 import io.ysb.imdb.booster.port.input.BatchLoadRatingUseCase
 import io.ysb.imdb.booster.port.input.GetTitleUseCase
-import io.ysb.imdb.booster.port.input.LoadRatingUseCase
+import io.ysb.imdb.booster.port.input.TitleLoadingUseCase
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
 import io.ysb.imdb.booster.port.output.GetTitleRatingPort
-import io.ysb.imdb.booster.port.output.LoadLocalRatingsPort
-import io.ysb.imdb.booster.port.output.LoadLocalVotesPort
+import io.ysb.imdb.booster.port.output.ReadLocalRatingsPort
+import io.ysb.imdb.booster.port.output.ReadLocalVotesPort
 import io.ysb.imdb.booster.port.output.SearchTitleByIdPort
 import io.ysb.imdb.booster.port.output.SearchTitlePort
 import io.ysb.imdb.booster.port.output.SetTitleRatingPort
@@ -49,46 +49,46 @@ class BeanConfig {
     fun ratingLoadingService(
         getTitleUseCase: GetTitleUseCase,
         rateTitleUseCase: RateTitleUseCase
-    ): RatingLoadingService {
-        return RatingLoadingService(
+    ): TitleLoadingService {
+        return TitleLoadingService(
             getTitleUseCase,
             rateTitleUseCase
         )
     }
 
     @Bean
-    fun loadLocalRatingsAdapter(): LoadLocalRatingsAdapter {
-        return LoadLocalRatingsAdapter()
+    fun readLocalRatingsAdapter(): ReadLocalRatingsAdapter {
+        return ReadLocalRatingsAdapter()
     }
 
     @Bean
-    fun loadLocalVotesAdapter(): LoadLocalVotesAdapter {
-        return LoadLocalVotesAdapter()
+    fun readLocalVotesAdapter(): ReadLocalVotesAdapter {
+        return ReadLocalVotesAdapter()
     }
 
     @Bean
     fun batchLoadRatingUseCase(
-        loadRatingUseCase: LoadRatingUseCase,
-        loadLocalRatingsPort: LoadLocalRatingsPort
+        titleLoadingUseCase: TitleLoadingUseCase,
+        readLocalRatingsPort: ReadLocalRatingsPort
     ): BatchLoadRatingUseCase {
         return ImdbBatchLoadingService(
-            loadRatingUseCase,
-            loadLocalRatingsPort
+            titleLoadingUseCase,
+            readLocalRatingsPort
         )
     }
 
     @Bean
     fun kinoposhukBatchLoadingService(
         searchTitlePort: SearchTitlePort,
-        loadingService: LoadRatingUseCase,
+        loadingService: TitleLoadingUseCase,
         titleService: TitleService,
-        loadLocalRatingsPort: LoadLocalVotesPort
+        readLocalRatingsPort: ReadLocalVotesPort
     ): KinoposhukBatchLoadingService {
         return KinoposhukBatchLoadingService(
             searchTitlePort,
             loadingService,
             titleService,
-            loadLocalRatingsPort
+            readLocalRatingsPort
         )
     }
 }

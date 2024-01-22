@@ -1,5 +1,5 @@
 package io.ysb.imdb.booster.port.input
 
-fun interface LoadRatingUseCase {
+fun interface TitleLoadingUseCase {
     fun loadRating(title: LoadingTitle)
 }

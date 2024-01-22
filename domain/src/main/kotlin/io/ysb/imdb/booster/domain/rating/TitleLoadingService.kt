@@ -2,14 +2,14 @@ package io.ysb.imdb.booster.domain.rating
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ysb.imdb.booster.port.input.GetTitleUseCase
-import io.ysb.imdb.booster.port.input.LoadRatingUseCase
+import io.ysb.imdb.booster.port.input.TitleLoadingUseCase
 import io.ysb.imdb.booster.port.input.LoadingTitle
 import io.ysb.imdb.booster.port.input.RateTitleUseCase
 
-class RatingLoadingService(
+class TitleLoadingService(
     private val getTitleUseCase: GetTitleUseCase,
     private val rateTitleUseCase: RateTitleUseCase
-) : LoadRatingUseCase {
+) : TitleLoadingUseCase {
 
     private val logger = KotlinLogging.logger {}
 

@@ -5,9 +5,9 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException
 import io.ysb.imdb.booster.port.output.KpLocalTitle
 import java.io.Reader
 
-class LoadLocalVotesAdapter : io.ysb.imdb.booster.port.output.LoadLocalVotesPort {
+class ReadLocalVotesAdapter : io.ysb.imdb.booster.port.output.ReadLocalVotesPort {
 
-    override fun loadLocalTitles(reader: Reader): List<KpLocalTitle> {
+    override fun readLocalTitles(reader: Reader): List<KpLocalTitle> {
         try {
             val records = CsvToBeanBuilder<KpVotesExportModel>(reader)
                 .withType(KpVotesExportModel::class.java)
