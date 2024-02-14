@@ -2,7 +2,8 @@
 
 ### Utilities to organise my IMDB library
 
-- Rate titles (movies\series\etc) using locally saved ratings (like export from another account, i.e. account merge).
+- Rate titles (movies\series\etc) using dump of IMDB ratings, like export from another account, i.e. account merge
+- Rate titles (movies\series\etc) using dump from other systems (Kinoposhuk), for migration from them
 - Something more. Probably. Later.
 
 ### Run
